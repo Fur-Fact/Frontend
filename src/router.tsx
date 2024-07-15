@@ -2,6 +2,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import App from './App';
 import MoblieLayout from './components/common/MoblieLayout';
 import PCLayout from './components/common/PCLayout';
+import MainPage from './pages/main';
 
 export const router = createBrowserRouter([
   {
@@ -10,7 +11,7 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <App />
+        element: <MainPage/>
       },
       {
         path: "other",
