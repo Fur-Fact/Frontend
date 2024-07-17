@@ -1,3 +1,5 @@
+import { useState } from "react";
+import useModalStore from "../../store/useEditModeStore";
 import PetInfoCard from "./PetInfoCard"
 import PetInspectionCard from "./PetInspectionCard"
 
@@ -13,8 +15,18 @@ type PetData = {
 
 const PetCard = ({data,HandleModal}:PetData) =>{
 
+  const [ age, setAge ] = useState<string>('10세');
+  const [ weight, setWeight ] = useState<string>('56kg');
+  const [ gender, setGender ] = useState<string>('남성');
+  const [ species, setSpecies ] = useState<string>('강아지');
  //TODO: 검사결과 조회
 
+  const { isEdit, setEdit, unSetEdit } = useModalStore();
+
+  const HandleSaveEditData = () =>{
+    //TODO: API연동
+    unSetEdit();
+  }
 
 
   return(
@@ -24,16 +36,23 @@ const PetCard = ({data,HandleModal}:PetData) =>{
           <div className=" font-bold h-10 text-xl	rounded-2xl opacity-80 bg-white	px-4 py-2">
             꼬미
           </div>
-          <button onClick={()=>HandleModal(true)}>
-            설정
-          </button>
+          {
+            isEdit ? 
+            <button onClick={()=>unSetEdit()}>
+              저장
+            </button>
+            :           
+            <button onClick={()=>HandleModal(true)}>
+              설정
+            </button>
+          }
         </div>
       </div>
       <div className="flex flex-row justify-between w-[350px] m-2">
-        <PetInfoCard type="나이" value="예시"/>
-        <PetInfoCard type="성별" value="예시"/>
-        <PetInfoCard type="종" value="예시"/>
-        <PetInfoCard type="몸무게" value="예시"/>
+        <PetInfoCard type="나이" handleChange={setAge} value={age} isEdit={isEdit}/>
+        <PetInfoCard type="성별" handleChange={setGender} value={gender} isEdit={isEdit}/>
+        <PetInfoCard type="종" handleChange={setSpecies} value={species} isEdit={isEdit}/>
+        <PetInfoCard type="몸무게" handleChange={setWeight} value={weight} isEdit={isEdit}/>
       </div>
       <div className="w-full font-bold text-left m-2">
         검사 결과

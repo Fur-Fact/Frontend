@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import Carousel from '../../components/main/Carousel/Carousel'
 import Modal from '../../components/main/Modal';
+import useModalStore from '../../store/useEditModeStore';
 
 const MainPage = () =>{
 
@@ -29,6 +30,8 @@ const MainPage = () =>{
     },
   ];
 
+  const { isEdit, setEdit, unSetEdit } = useModalStore();
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [chooseDelete, setChooseDelete] = useState(false);
   //TODO: 설정 input은 상태 관리 라이브러리 활용
@@ -39,6 +42,8 @@ const MainPage = () =>{
   };
   const handleDelete = () => {
     setChooseDelete(true);
+    console.log(isEdit)
+
   }
   //TOOD: API연동
 
@@ -48,6 +53,10 @@ const MainPage = () =>{
     }
   },[isModalOpen])//초기화
 
+  const HandleEdit = () =>{
+    setEdit();
+    setIsModalOpen(false);
+  }
   
   return(
     <section className='flex flex-row justify-center bg-[#FEFEFE]'>
@@ -71,7 +80,7 @@ const MainPage = () =>{
             <>
               <h2 className="item text-xl mb-4">설정</h2>
               <div className='flex flex-row'>
-                <div>
+                <div onClick={()=>HandleEdit()}>
                   수정
                 </div>
                 /
@@ -81,10 +90,10 @@ const MainPage = () =>{
               </div>
             </>
           }
-
         </div>
         {/* TODO: 삭제하시겠습니까? 추가 후 삭제 구현 */}
       </Modal>
+      {/* TODO: 삭제 알림 처리*/}
     </section>
   )
 }
