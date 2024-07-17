@@ -1,12 +1,21 @@
+import { useState } from "react";
 import PetInfoCard from "./PetInfoCard"
 import PetInspectionCard from "./PetInspectionCard"
+import Modal from "./Modal";
 
 const AddCard = () => {
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
-    <div className="w-[350px] flex flex-col items-center relative">
-      <div className="absolute z-20 inset-0 rounded-3xl bg-gray-700 opacity-50 "></div>
-      <div className="relative w-[357px] blur-sm h-[320px] bg-black rounded-3xl m-2 z-10">
-        이미지
+    <div className="w-full flex flex-col items-center relative">
+      <div className="flex flex-col justify-center items-center w-[357px] h-[320px] bg-[#DFDFDF] rounded-3xl m-2 z-10 filter grayscale">
+        <div className="text-7xl font-bold flex flex-row justify-center items-center  rounded-full text-white	 w-[100px] h-[100px] bg-[#40A5FD] hover:bg-black">
+          <div onClick={()=>setIsModalOpen(true)}>
+            +
+          </div>
+        </div>
+        <div>버튼을 눌러 기르고 계신 동물을 추가해주세요</div>
       </div>
       <div className="flex flex-row blur-sm justify-between w-[350px] m-2 z-10">
         <PetInfoCard type="나이" value="예시"/>
@@ -23,11 +32,9 @@ const AddCard = () => {
         <PetInspectionCard/>
         <PetInspectionCard/>
       </div>
-      <div className="absolute inset-0 flex flex-col items-center justify-center rounded-3xl z-20">
-        <p className="text-white font-bold text-xl ml-4">버튼을 누르고 </p>
-        <p className="text-white font-bold text-xl ml-4">기르고 계신 동물을 등록해주세요</p>
-
-      </div>
+      <Modal isOpen={isModalOpen}  onClose={() => setIsModalOpen(false)}>
+        생성 모달
+      </Modal>
     </div>
   )
 }

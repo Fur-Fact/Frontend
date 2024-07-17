@@ -14,9 +14,9 @@ type PetData = {
   id: number,
   petName: string,
   imgUrl: string,
-  birthday: string, // 날짜 형식 유지
+  birthday: string,
   gender: string,
-  species: string, // 예시로 dog 추가
+  species: string,
   weight: number,
 }
 
@@ -36,12 +36,12 @@ const EmblaCarousel: React.FC<PropType> = ({ slides, options, HandleModal }) => 
               {/* <div className='bg-black'>hello</div> */}
             </div>
           ))}
-          <AddCard/>
+          <div className="embla__slide">
+            <AddCard/>
+          </div>
         </div>
       </div>
-
       <div className="embla__controls">
-
         <div className="embla__dots">
           {scrollSnaps.map((_, index) => (
             <DotButton
