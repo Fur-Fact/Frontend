@@ -3,10 +3,12 @@ import App from './App';
 import MoblieLayout from './components/common/MoblieLayout';
 import PCLayout from './components/common/PCLayout';
 import MainPage from './pages/main';
+import Vet from './pages/vetList';
+import VetResult from './pages/vetResult';
 
 export const router = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     element: <MoblieLayout />,
     children: [
       {
@@ -14,25 +16,25 @@ export const router = createBrowserRouter([
         element: <MainPage/>
       },
       {
-        path: "other",
-        element: <App /> 
+        path: 'other',
+        element: <App />,
       },
     ],
   },
   {
-    path: "/back",
+    path: '/vet',
     element: <PCLayout />,
     children: [
       {
         index: true,
-        element: <App />
+        element: <Vet />,
       },
       {
-        path: "other",
-        element: <App />
-      }
-    ]
-  }
+        path: 'result',
+        element: <VetResult />,
+      },
+    ],
+  },
 ]);
 
 export const pages = [];
