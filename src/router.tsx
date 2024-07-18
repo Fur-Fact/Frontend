@@ -3,6 +3,8 @@ import App from './App';
 import MoblieLayout from './components/common/MoblieLayout';
 import PCLayout from './components/common/PCLayout';
 import MainPage from './pages/main';
+import Login from './pages/login';
+import SignUp from './pages/signup';
 
 export const router = createBrowserRouter([
   {
@@ -14,9 +16,13 @@ export const router = createBrowserRouter([
         element: <MainPage/>
       },
       {
-        path: "other",
-        element: <App /> 
+        path: "/login",
+        element: <Login/> 
       },
+      {
+        path: "signup",
+        element: <SignUp/>
+      }
     ],
   },
   {
