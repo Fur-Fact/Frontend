@@ -1,21 +1,28 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa'
-
+import mkcert from 'vite-plugin-mkcert'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(),
+  plugins: [
+    react(),
+    mkcert(), // 로컬 HTTPS를 위한 플러그인
     VitePWA({ 
       registerType: 'autoUpdate',
-      includeAssets: [],
+      includeAssets: ['favicon.ico', 'robots.txt', 'apple-touch-icon.png', 'masked-icon.svg'],
       devOptions:{
         enabled: true
       },
       manifest:{
         name: 'Fur-fact',
         short_name : 'Fur-fact',
+        description: 'Get interesting facts about animals',
         theme_color: '#40A5FD',
+        background_color: '#ffffff',
+        display: 'standalone',
+        scope: '/',
+        start_url: '/',
         icons: [
           {
             src: '/pwa-64x64.png',
@@ -40,6 +47,11 @@ export default defineConfig({
           }
         ]
       }
-    })],
-  
+    })
+  ],
+  server: {
+    https: true, // HTTPS 사용
+    host: '0.0.0.0', // 로컬 네트워크에서 접근 가능하게 설정
+    port: 5173, // 원하는 포트 번호
+  }
 })

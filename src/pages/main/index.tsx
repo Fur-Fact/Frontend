@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import Carousel from '../../components/main/Carousel/Carousel'
 import Modal from '../../components/main/Modal';
 import useModalStore from '../../store/useEditModeStore';
+import Navigation from '../../components/common/Navigation/Navigation';
 
 const MainPage = () =>{
 
@@ -59,8 +60,9 @@ const MainPage = () =>{
   }
   
   return(
-    <section className='flex flex-row justify-center bg-[#FEFEFE]'>
+    <section className='flex flex-col justify-center bg-[#FEFEFE]'>
       <Carousel slides={data} HandleModal={handleModalOpen} />
+      <Navigation/>
       <Modal isOpen={isModalOpen}  onClose={() => setIsModalOpen(false)} >
         <div className='flex flex-col justify-center items-center'>
           {
