@@ -12,6 +12,9 @@ export default {
       colors: {
         primary: '#40A5FD',
       },
+      backgroundImage: {
+        'Dog': "url('/src/assets/Dog.jpg')",
+      }
     },
   },
   plugins: [],

@@ -31,7 +31,7 @@ const PetCard = ({data,HandleModal}:PetData) =>{
 
   return(
     <div className="w-full flex flex-col items-center">
-      <div className="flex flex-row w-[357px] h-[320px] bg-slate-300 rounded-3xl m-2 p-2">
+      <div className="flex flex-row w-[357px] h-[320px] bg-cover bg-center bg-[url('/src/assets/Dog.jpg')] rounded-3xl m-2 p-2">
         <div className="flex flex-row w-full h-10 justify-between">
           <div className=" font-bold text-xl rounded-2xl opacity-80 bg-white	px-4 py-2">
             꼬미

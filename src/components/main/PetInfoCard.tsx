@@ -16,7 +16,7 @@ const PetInfoCard = ({type, handleChange , value, isEdit}:InfoData) =>{
           onChange={(e) => handleChange(e.target.value)}
         />//TODO: 벨류 선택 요소 수정
       ) : (
-        <div className="font-bold">{value}세</div>
+        <div className="font-bold">{value}</div>
       )}
       <div>{type}</div>
     </div>
