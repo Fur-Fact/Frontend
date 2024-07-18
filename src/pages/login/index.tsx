@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import Input from '../../components/common/Input';
 import { Link } from 'react-router-dom';
 import FullButton from '../../components/common/FullButton';
@@ -9,13 +9,13 @@ const Login = () => {
   const [isIdValid, setIsIdValid] = useState(false);
   const [isPasswordValid, setIsPasswordValid] = useState(false);
 
-  const handleIdChange = (e) => {
+  const handleIdChange = (e:any) => {
     const value = e.target.value;
     setId(value);
     setIsIdValid(value.length >= 5);
   };
 
-  const handlePasswordChange = (e) => {
+  const handlePasswordChange = (e:any) => {
     const value = e.target.value;
     setPassword(value);
     setIsPasswordValid(value.length >= 6);

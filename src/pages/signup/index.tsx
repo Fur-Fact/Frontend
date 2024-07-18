@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Input from '../../components/common/Input';
 import { Link } from 'react-router-dom';
 import FullButton from '../../components/common/FullButton';
@@ -8,42 +8,50 @@ const SignUp = () => {
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [phone, setPhone] = useState('');
 
   const [isNameValid, setIsNameValid] = useState(false);
   const [isIdValid, setIsIdValid] = useState(false);
   const [isPasswordValid, setIsPasswordValid] = useState(false);
   const [isConfirmPasswordValid, setIsConfirmPasswordValid] = useState(false);
+  const [isPhoneValid, setIsPhoneValid] = useState(false);
 
-  const handleNameChange = (e) => {
+  const handleNameChange = (e:any) => {
     const value = e.target.value;
     setName(value);
     setIsNameValid(value.length >= 2); // 예: 이름은 최소 2자 이상
   };
 
-  const handleIdChange = (e) => {
+  const handleIdChange = (e:any) => {
     const value = e.target.value;
     setId(value);
     setIsIdValid(value.length >= 5); // 예: 아이디는 최소 5자 이상
   };
 
-  const handlePasswordChange = (e) => {
+  const handlePasswordChange = (e:any) => {
     const value = e.target.value;
     setPassword(value);
     setIsPasswordValid(value.length >= 6); // 예: 비밀번호는 최소 6자 이상
     setIsConfirmPasswordValid(value === confirmPassword);
   };
 
-  const handleConfirmPasswordChange = (e) => {
+  const handleConfirmPasswordChange = (e:any) => {
     const value = e.target.value;
     setConfirmPassword(value);
     setIsConfirmPasswordValid(value === password);
+  };
+
+  const handlePhoneChange = (e:any) => {
+    const value = e.target.value;
+    setPhone(value);
+    setIsPhoneValid(/^\d{10,11}$/.test(value)); // 예: 휴대폰 번호는 10~11자리 숫자
   };
 
   const handleSignUp = () => {
     alert('회원가입 성공');
   }
 
-  const isFormValid = isNameValid && isIdValid && isPasswordValid && isConfirmPasswordValid;
+  const isFormValid = isNameValid && isIdValid && isPasswordValid && isConfirmPasswordValid && isPhoneValid;
 
   return (
     <section className="flex flex-col h-full justify-center bg-[#FEFEFE]">
@@ -59,6 +67,12 @@ const SignUp = () => {
             placeholder="이름"
             value={name}
             onChange={handleNameChange}
+          />
+          <Input
+            label="휴대폰 번호"
+            placeholder="휴대폰 번호"
+            value={phone}
+            onChange={handlePhoneChange}
           />
           <Input
             label="아이디"
