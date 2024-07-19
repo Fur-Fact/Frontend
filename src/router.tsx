@@ -9,7 +9,7 @@ import SignUp from './pages/signup';
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <MoblieLayout />,
+    element: <MoblieLayout/>,
     children: [
       {
         index: true,

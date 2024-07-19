@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import Input from '../../components/common/Input';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import FullButton from '../../components/common/FullButton';
+import axios from 'axios';
 
 const SignUp = () => {
   const [name, setName] = useState('');
@@ -15,6 +16,8 @@ const SignUp = () => {
   const [isPasswordValid, setIsPasswordValid] = useState(false);
   const [isConfirmPasswordValid, setIsConfirmPasswordValid] = useState(false);
   const [isPhoneValid, setIsPhoneValid] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleNameChange = (e:any) => {
     const value = e.target.value;
@@ -47,9 +50,28 @@ const SignUp = () => {
     setIsPhoneValid(/^\d{10,11}$/.test(value)); // 예: 휴대폰 번호는 10~11자리 숫자
   };
 
-  const handleSignUp = () => {
-    alert('회원가입 성공');
-  }
+  const handleSignUp = async () => {
+    try {
+      const response = await axios.post('http://localhost:3000/api/v1/users/signup', {
+        name: name,
+        email: id,
+        password: password,
+        phone: phone,
+      });
+
+      if (response.status === 200) {
+        alert('회원가입 성공');
+        navigate('/login');
+      }
+    } catch (error) {
+      if (error.response && error.response.status === 400) {
+        alert('중복된 이메일 또는 필드 누락');
+      } else {
+        alert('error');
+        console.log(error);
+      }
+    }
+  };
 
   const isFormValid = isNameValid && isIdValid && isPasswordValid && isConfirmPasswordValid && isPhoneValid;
 

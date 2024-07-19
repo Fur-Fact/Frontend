@@ -10,6 +10,7 @@ type PropType = {
   options?: EmblaOptionsType
   HandleModal: (value:boolean) => void
 }
+
 type PetData = {
   id: number,
   petName: string,
