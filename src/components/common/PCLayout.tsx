@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router-dom';
-import logo from '../../assets/logo.png'; // 이미지 파일 경로를 import로 처리
+import logo from '../../assets/logo.png'; 
 
 function PCLayout() {
   return (
