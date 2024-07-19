@@ -3,6 +3,7 @@ import Input from '../../components/common/Input';
 import { Link, useNavigate } from 'react-router-dom';
 import FullButton from '../../components/common/FullButton';
 import axios from 'axios';
+import useAuthStore from '../../store/useAuthStore';
 
 const Login = () => {
   const [id, setId] = useState('');
@@ -11,6 +12,8 @@ const Login = () => {
   const [isPasswordValid, setIsPasswordValid] = useState(false);
 
   const navigate = useNavigate();
+  const { setToken } = useAuthStore();
+
 
   const handleIdChange = (e:any) => {
     const value = e.target.value;
@@ -33,7 +36,7 @@ const Login = () => {
 
       if (response.status === 200) {
         alert('로그인 되었습니다!');
-        //zustand 토큰 관리
+        setToken(response.data.access_token);
         navigate('/')
       }
     } catch (error) {
