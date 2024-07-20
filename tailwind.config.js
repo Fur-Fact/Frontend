@@ -1,21 +1,19 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Pretend'],
+        sans: ["Pretend"],
       },
       colors: {
-        primary: '#40A5FD',
+        primary: "#40A5FD",
+        subTitle: "#818181",
       },
       backgroundImage: {
-        'Dog': "url('/src/assets/Dog.jpg')",
-      }
+        Dog: "url('/src/assets/Dog.jpg')",
+      },
     },
   },
   plugins: [],
-}
+};
