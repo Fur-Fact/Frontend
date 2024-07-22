@@ -19,7 +19,7 @@ const PetCard = ({ data, HandleModal }: { data: PetData, HandleModal: (show: boo
   const [gender, setGender] = useState<string>('남성');
   const [species, setSpecies] = useState<string>('강아지');
 
-  const { isEdit, setEdit, unSetEdit } = useModalStore();
+  const { isEdit,  unSetEdit } = useModalStore();
 
   const HandleSaveEditData = () => {
     // TODO: API 연동
@@ -38,7 +38,6 @@ const PetCard = ({ data, HandleModal }: { data: PetData, HandleModal: (show: boo
     { id: 8, result: "검사 결과 8" },
     { id: 9, result: "검사 결과 9" },
   ];
-
   return (
     <div className="w-full flex flex-col items-center">
       <div className="flex flex-row w-[357px] h-[320px] bg-cover bg-center bg-[url('/src/assets/Dog.jpg')] rounded-3xl m-2 p-2">
