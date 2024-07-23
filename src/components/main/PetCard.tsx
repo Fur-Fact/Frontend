@@ -12,7 +12,7 @@ type PetData = {
   birthday: string,
   gender: string,
   species: string, 
-  weight: number,
+  weight: number|string,
   age: string,  // age가 누락되어 있어 추가합니다.
 };
 
@@ -48,12 +48,12 @@ const PetCard = ({ data, HandleModal }: { data: PetData, HandleModal: (show: boo
         }
       });
       if (response.status === 200) {
-        console.log("Pet data updated successfully");
+        console.log("성공");
       } else {
-        console.log("Failed to update pet data");
+        console.log("실패");
       }
     } catch (error) {
-      console.error("There was an error updating the pet data!", error);
+      console.error( error);
     }
   };
 
