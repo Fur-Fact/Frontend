@@ -1,49 +1,87 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useModalStore from "../../store/useEditModeStore";
 import PetInfoCard from "./PetInfoCard";
 import PetInspectionCard from "./PetInspectionCard";
+import axios from "axios";
+import useAuthStore from "../../store/useAuthStore";
 
 type PetData = {
   id: number,
-  petName: string,
-  imgUrl: string,
+  name: string,
+  image: string,
   birthday: string,
   gender: string,
   species: string, 
   weight: number,
+  age: string,  // age가 누락되어 있어 추가합니다.
 };
 
 const PetCard = ({ data, HandleModal }: { data: PetData, HandleModal: (show: boolean) => void }) => {
-  const [age, setAge] = useState<string>('10세');
-  const [weight, setWeight] = useState<string>('56kg');
-  const [gender, setGender] = useState<string>('남성');
-  const [species, setSpecies] = useState<string>('강아지');
+  const [age, setAge] = useState(data.age);
+  const [weight, setWeight] = useState(data.weight);
+  const [gender, setGender] = useState(data.gender);
+  const [species, setSpecies] = useState(data.species);
+  const [img, setImg] = useState(data.image);
+  const [name, setName] = useState(data.name);
+  const { token } = useAuthStore();
 
-  const { isEdit,  unSetEdit } = useModalStore();
 
-  const HandleSaveEditData = () => {
-    // TODO: API 연동
+  const { isEdit, unSetEdit } = useModalStore();
+
+  const HandleSaveEditData = async () => {
+    await putPetData();
     unSetEdit();
   };
+
+  const putPetData = async () => {
+    try {
+      const response = await axios.put(`http://localhost:3000/api/v1/pets/${data.id}`, {
+        name,
+        age,
+        weight,
+        gender,
+        species,
+        imgUrl: img,
+      }, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        }
+      });
+      if (response.status === 200) {
+        console.log("Pet data updated successfully");
+      } else {
+        console.log("Failed to update pet data");
+      }
+    } catch (error) {
+      console.error("There was an error updating the pet data!", error);
+    }
+  };
+
+  useEffect(() => {
+    console.log(data);
+    setWeight(data.weight);
+    setGender(data.gender);
+    setSpecies(data.species);
+    setImg(data.image);
+    setName(data.name);
+  }, [data]);
 
   // 임의의 검사 결과 데이터
   const inspectionData = [
     { id: 1, result: "검사 결과 1" },
     { id: 2, result: "검사 결과 2" },
     { id: 3, result: "검사 결과 3" },
-    { id: 4, result: "검사 결과 4" },
-    { id: 5, result: "검사 결과 5" },
-    { id: 6, result: "검사 결과 6" },
-    { id: 7, result: "검사 결과 7" },
-    { id: 8, result: "검사 결과 8" },
-    { id: 9, result: "검사 결과 9" },
   ];
+
   return (
     <div className="w-full flex flex-col items-center">
-      <div className="flex flex-row w-[357px] h-[320px] bg-cover bg-center bg-[url('/src/assets/Dog.jpg')] rounded-3xl m-2 p-2">
-        <div className="flex flex-row w-full h-10 justify-between">
-          <div className=" font-bold text-xl rounded-2xl opacity-80 bg-white px-4 py-2">
-            꼬미
+      <div
+        className="relative flex flex-row w-[357px] h-[320px] bg-cover bg-center rounded-3xl m-2 p-2"
+        style={{ backgroundImage: `url(${img})` }}
+      >
+        <div className="flex flex-row w-full h-10 justify-between relative z-10">
+          <div className="font-bold text-xl rounded-2xl opacity-80 bg-white px-4 py-2">
+            {name}
           </div>
           {isEdit ? (
             <button onClick={HandleSaveEditData}>
