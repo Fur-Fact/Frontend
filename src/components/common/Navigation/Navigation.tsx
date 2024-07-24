@@ -12,7 +12,7 @@ const Navigation = () => {
     <div className="w-full flex flex-row justify-around items-center h-16 bg-white">
       <NavLink to="/" defaultImg={Home} focusImg={Home_Focus} altText="Alarm" />
       <NavLink to="/alarm" defaultImg={Alarm} focusImg={Alarm_Focus} altText="Home" />
-      <NavLink to="/myPage" defaultImg={MyPage} focusImg={MyPage_Focus} altText="MyPage" />
+      <NavLink to="/login" defaultImg={MyPage} focusImg={MyPage_Focus} altText="MyPage" />
     </div>
   );
 };

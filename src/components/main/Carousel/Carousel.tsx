@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { EmblaOptionsType } from 'embla-carousel'
 import { DotButton, useDotButton } from './CarouselDotButton'
 import useEmblaCarousel from 'embla-carousel-react'
@@ -9,6 +9,7 @@ type PropType = {
   slides: PetData[]
   options?: EmblaOptionsType
   HandleModal: (value:boolean) => void
+  setSelected: (value: number) => void
 }
 
 type PetData = {
@@ -21,17 +22,21 @@ type PetData = {
   weight: number,
 }
 
-const EmblaCarousel: React.FC<PropType> = ({ slides, options, HandleModal }) => {
+const EmblaCarousel: React.FC<PropType> = ({ slides, options, HandleModal, setSelected }) => {
   const [emblaRef, emblaApi] = useEmblaCarousel({align:'center',...options})
 
   const { selectedIndex, scrollSnaps, onDotButtonClick } =
     useDotButton(emblaApi)
 
+  useEffect(() => {
+    setSelected(selectedIndex)
+  },[selectedIndex])
+
   return (
     <section className="embla">
       <div className="embla__viewport" ref={emblaRef}>
         <div className="embla__container">
-          {slides.map((index,data) => (
+          {slides.map((data,index) => (
             <div className="embla__slide" key={index}>
               <PetCard data={data} HandleModal={HandleModal}/>
               {/* <div className='bg-black'>hello</div> */}
