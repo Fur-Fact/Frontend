@@ -1,28 +1,38 @@
-import { createBrowserRouter } from 'react-router-dom';
-import App from './App';
-import MoblieLayout from './components/common/MoblieLayout';
-import PCLayout from './components/common/PCLayout';
-import MainPage from './pages/main';
-import Login from './pages/login';
-import SignUp from './pages/signup';
+import { createBrowserRouter } from "react-router-dom";
+import App from "./App";
+import MoblieLayout from "./components/common/MoblieLayout";
+import PCLayout from "./components/common/PCLayout";
+import MainPage from "./pages/main";
+import Login from "./pages/login";
+import SignUp from "./pages/signup";
+import Alarm from "./pages/alarm";
+import ResultMobilePage from "./pages/result/mobile";
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <MoblieLayout/>,
+    element: <MoblieLayout />,
     children: [
       {
         index: true,
-        element: <MainPage/>
+        element: <MainPage />,
       },
       {
         path: "/login",
-        element: <Login/> 
+        element: <Login />,
       },
       {
-        path: "/signup",
-        element: <SignUp/>
-      }
+        path: "signup",
+        element: <SignUp />,
+      },
+      {
+        path: "alarm",
+        element: <Alarm />,
+      },
+      {
+        path: "result",
+        element: <ResultMobilePage />,
+      },
     ],
   },
   {
@@ -31,14 +41,14 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <App />
+        element: <App />,
       },
       {
         path: "other",
-        element: <App />
-      }
-    ]
-  }
+        element: <App />,
+      },
+    ],
+  },
 ]);
 
 export const pages = [];
