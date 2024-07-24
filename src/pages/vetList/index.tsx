@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 interface Item {
+  id: string;
   petName: string;
   age: string;
   gender: string;
