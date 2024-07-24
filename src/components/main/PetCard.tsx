@@ -1,75 +1,115 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useModalStore from "../../store/useEditModeStore";
-import PetInfoCard from "./PetInfoCard"
-import PetInspectionCard from "./PetInspectionCard"
+import PetInfoCard from "./PetInfoCard";
+import PetInspectionCard from "./PetInspectionCard";
+import axios from "axios";
+import useAuthStore from "../../store/useAuthStore";
 
 type PetData = {
   id: number,
-  petName: string,
-  imgUrl: string,
+  name: string,
+  image: string,
   birthday: string,
   gender: string,
   species: string, 
-  weight: number,
-}
+  weight: number|string,
+  age: string,  // age가 누락되어 있어 추가합니다.
+};
 
-const PetCard = ({data,HandleModal}:PetData) =>{
+const PetCard = ({ data, HandleModal }: { data: PetData, HandleModal: (show: boolean) => void }) => {
+  const [age, setAge] = useState(data.age);
+  const [weight, setWeight] = useState(data.weight);
+  const [gender, setGender] = useState(data.gender);
+  const [species, setSpecies] = useState(data.species);
+  const [img, setImg] = useState(data.image);
+  const [name, setName] = useState(data.name);
+  const { token } = useAuthStore();
 
-  const [ age, setAge ] = useState<string>('10세');
-  const [ weight, setWeight ] = useState<string>('56kg');
-  const [ gender, setGender ] = useState<string>('남성');
-  const [ species, setSpecies ] = useState<string>('강아지');
- //TODO: 검사결과 조회
 
-  const { isEdit, setEdit, unSetEdit } = useModalStore();
+  const { isEdit, unSetEdit } = useModalStore();
 
-  const HandleSaveEditData = () =>{
-    //TODO: API연동
+  const HandleSaveEditData = async () => {
+    await putPetData();
     unSetEdit();
-  }
+  };
 
+  const putPetData = async () => {
+    try {
+      const response = await axios.put(`http://localhost:3000/api/v1/pets/${data.id}`, {
+        name,
+        age,
+        weight,
+        gender,
+        species,
+        imgUrl: img,
+      }, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        }
+      });
+      if (response.status === 200) {
+        console.log("성공");
+      } else {
+        console.log("실패");
+      }
+    } catch (error) {
+      console.error( error);
+    }
+  };
 
-  return(
+  useEffect(() => {
+    console.log(data);
+    setWeight(data.weight);
+    setGender(data.gender);
+    setSpecies(data.species);
+    setImg(data.image);
+    setName(data.name);
+  }, [data]);
+
+  // 임의의 검사 결과 데이터
+  const inspectionData = [
+    { id: 1, result: "검사 결과 1" },
+    { id: 2, result: "검사 결과 2" },
+    { id: 3, result: "검사 결과 3" },
+  ];
+
+  return (
     <div className="w-full flex flex-col items-center">
-      <div className="flex flex-row w-[357px] h-[320px] bg-slate-300 rounded-3xl m-2 p-2">
-        <div className="flex flex-row w-full h-10 justify-between">
-          <div className=" font-bold text-xl rounded-2xl opacity-80 bg-white	px-4 py-2">
-            꼬미
+      <div
+        className="relative flex flex-row w-[357px] h-[320px] bg-cover bg-center rounded-3xl m-2 p-2"
+        style={{ backgroundImage: `url(${img})` }}
+      >
+        <div className="flex flex-row w-full h-10 justify-between relative z-10">
+          <div className="font-bold text-xl rounded-2xl opacity-80 bg-white px-4 py-2">
+            {name}
           </div>
-          {
-            isEdit ? 
-            <button onClick={()=>unSetEdit()}>
+          {isEdit ? (
+            <button onClick={HandleSaveEditData}>
               저장
             </button>
-            :           
-            <button onClick={()=>HandleModal(true)}>
+          ) : (
+            <button onClick={() => HandleModal(true)}>
               설정
             </button>
-          }
+          )}
         </div>
       </div>
       <div className="flex flex-row justify-between w-[350px] m-2">
-        <PetInfoCard type="나이" handleChange={setAge} value={age} isEdit={isEdit}/>
-        <PetInfoCard type="성별" handleChange={setGender} value={gender} isEdit={isEdit}/>
-        <PetInfoCard type="종" handleChange={setSpecies} value={species} isEdit={isEdit}/>
-        <PetInfoCard type="몸무게" handleChange={setWeight} value={weight} isEdit={isEdit}/>
+        <PetInfoCard type="나이" handleChange={setAge} value={age} isEdit={isEdit} />
+        <PetInfoCard type="성별" handleChange={setGender} value={gender} isEdit={isEdit} />
+        <PetInfoCard type="종" handleChange={setSpecies} value={species} isEdit={isEdit} />
+        <PetInfoCard type="몸무게" handleChange={setWeight} value={weight} isEdit={isEdit} />
       </div>
       <div className="w-full font-bold text-left m-2">
         검사 결과
       </div>
-      <div className=" h-[480px] overflow-scroll	">
-        <PetInspectionCard/>
-        <PetInspectionCard/>
-        <PetInspectionCard/>
-        <PetInspectionCard/>
-        <PetInspectionCard/>
-        <PetInspectionCard/>
-        <PetInspectionCard/>
-        <PetInspectionCard/>
-        <PetInspectionCard/>
+      <div className="h-[480px] overflow-scroll">
+        {inspectionData.map((inspection) => (
+          <PetInspectionCard key={inspection.id} number={inspection.id} result={inspection.result} />
+        ))}
       </div>
-    </div>  
-  )
-}
+    </div>
+  );
+};
 
-export default PetCard
+export default PetCard;

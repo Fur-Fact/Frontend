@@ -1,101 +1,108 @@
 import { useEffect, useState } from 'react';
-import Carousel from '../../components/main/Carousel/Carousel'
+import Carousel from '../../components/main/Carousel/Carousel';
 import Modal from '../../components/main/Modal';
 import useModalStore from '../../store/useEditModeStore';
+import Navigation from '../../components/common/Navigation/Navigation';
+import axios from 'axios';
+import useAuthStore from '../../store/useAuthStore';
+import { useDotButton } from '../../components/main/Carousel/CarouselDotButton';
 
-const MainPage = () =>{
-
-  const data = [
-    {
-      "id": 1,
-      "petName": "꼬미",
-      "imgUrl": "...",
-      "birthday": "2022-06-22", // 날짜 형식 유지
-      "gender": "male",
-      "species": "dog", // 예시로 "dog" 추가
-      "weight": 17,
-      "disease": [], // 빈 배열 유지
-      // 프론트 데이터에 따라서 요소가 변경될 수 있음
-    },
-    {
-      "id": 2,
-      "petName": "꼬미",
-      "imgUrl": "...",
-      "birthday": "2022-06-22", // 날짜 형식 유지
-      "gender": "male",
-      "species": "dog", // 예시로 "dog" 추가
-      "weight": 17,
-      "disease": [], // 빈 배열 유지
-      // 프론트 데이터에 따라서 요소가 변경될 수 있음
-    },
-  ];
+const MainPage = () => {
 
   const { isEdit, setEdit, unSetEdit } = useModalStore();
-
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [chooseDelete, setChooseDelete] = useState(false);
-  //TODO: 설정 input은 상태 관리 라이브러리 활용
-  //TODO: 수정 삭제 선택 기능
+  const [pets, setPets] = useState([]);
+  const { token } = useAuthStore();
+  const [ selectedPet, setSelectedPet ] = useState(0);
+
+  useEffect(() => {
+    getPetData();
+  }, []);
+
+  const getPetData = async () => {
+    try {
+      const response = await axios.get('http://localhost:3000/api/v1/pets/list', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (response.status === 200) {
+        console.log(response.data.pets);
+        setPets(response.data.pets);
+      }
+    } catch (error) {
+      console.error('Error fetching pet data:', error);
+    }
+  };
+
+  const deletePetData = async (id: number) => {
+    try {
+      const response = await axios.delete(`http://localhost:3000/api/v1/pets/${pets[selectedPet].id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (response.status === 200) {
+        setPets(pets.filter(pet => pets[selectedPet].id !== id));
+        setIsModalOpen(false);
+      }
+    } catch (error) {
+      console.error( error);
+    }
+  };
 
   const handleModalOpen = () => {
     setIsModalOpen(true);
   };
+
   const handleDelete = () => {
+    deletePetData(0);//현재 id를 구분할 수 있어야함
     setChooseDelete(true);
-    console.log(isEdit)
+    console.log(isEdit);
+  };
 
-  }
-  //TOOD: API연동
-
-  useEffect(()=>{
-    if(!isModalOpen){
+  useEffect(() => {
+    if (!isModalOpen) {
       setChooseDelete(false);
     }
-  },[isModalOpen])//초기화
+  }, [isModalOpen]);
 
-  const HandleEdit = () =>{
+  const handleEdit = () => {
     setEdit();
     setIsModalOpen(false);
-  }
+  };
   
-  return(
-    <section className='flex flex-row justify-center bg-[#FEFEFE]'>
-      <Carousel slides={data} HandleModal={handleModalOpen} />
-      <Modal isOpen={isModalOpen}  onClose={() => setIsModalOpen(false)} >
-        <div className='flex flex-col justify-center items-center'>
-          {
-            chooseDelete ?
+  const setSelected = (index: number) => {
+    setSelectedPet(index);
+  }
+
+
+  return (
+    <section className="flex flex-col justify-center bg-[#FEFEFE]">
+      <Carousel slides={pets} HandleModal={handleModalOpen} setSelected={setSelected} />
+      <Navigation />
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+        <div className="flex flex-col justify-center items-center">
+          {chooseDelete ? (
             <>
-              <div>
-                삭제하시겠습니까?
-              </div>
-              <div>
-                예
-              </div>
-              <div onClick={()=>setChooseDelete(false)} >
-                아니오
-              </div>
+              <div>{selectedPet}번 펫 삭제하시겠습니까?</div>
+              <div onClick={()=>handleDelete}>예</div>
+              <div onClick={() => setChooseDelete(false)}>아니오</div>
             </>
-            :
+          ) : (
             <>
               <h2 className="item text-xl mb-4">설정</h2>
-              <div className='flex flex-row'>
-                <div onClick={()=>HandleEdit()}>
-                  수정
-                </div>
-                /
-                <div onClick={()=>handleDelete()}>
-                  삭제
-                </div>
+              <div className="flex flex-row">
+                <div onClick={handleEdit}>수정</div>/
+                <div onClick={handleDelete}>삭제</div>
               </div>
             </>
-          }
+          )}
         </div>
-        {/* TODO: 삭제하시겠습니까? 추가 후 삭제 구현 */}
       </Modal>
-      {/* TODO: 삭제 알림 처리*/}
     </section>
-  )
-}
+  );
+};
 
-export default MainPage
+export default MainPage;

@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from 'react';
 
 interface Distinction {
@@ -146,13 +147,13 @@ function ResultItem({
 
   useEffect(() => {
     if (separationFilledPercent !== null) {
-      if (element === 'Se') {
+      if (element === "Se") {
         console.log(
           ((1 / 6) * (value - distinctionValue.distinction1)) /
             separation!.separation2
         );
-        console.log('separationPercent', separationPercent);
-        console.log('separationFilledPercent', separationFilledPercent);
+        console.log("separationPercent", separationPercent);
+        console.log("separationFilledPercent", separationFilledPercent);
       }
     }
   }, [separationFilledPercent]);
@@ -160,7 +161,7 @@ function ResultItem({
   const totalWidth =
     separationPercent !== null && separationFilledPercent !== null
       ? `${separationPercent + separationFilledPercent}%`
-      : '0%';
+      : "0%";
 
   return (
     <div className='flex flex-col items-start py-2'>
