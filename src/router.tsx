@@ -1,3 +1,4 @@
+
 import { createBrowserRouter } from "react-router-dom";
 import App from "./App";
 import MoblieLayout from "./components/common/MoblieLayout";
@@ -7,6 +8,9 @@ import Login from "./pages/login";
 import SignUp from "./pages/signup";
 import Alarm from "./pages/alarm";
 import ResultMobilePage from "./pages/result/mobile";
+import Vet from './pages/vetList';
+import VetResult from './pages/vetResult';
+
 
 export const router = createBrowserRouter([
   {
@@ -36,16 +40,16 @@ export const router = createBrowserRouter([
     ],
   },
   {
-    path: "/back",
+    path: '/vet',
     element: <PCLayout />,
     children: [
       {
         index: true,
-        element: <App />,
+        element: <Vet />,
       },
       {
-        path: "other",
-        element: <App />,
+        path: 'result/:testId',
+        element: <VetResult />,
       },
     ],
   },

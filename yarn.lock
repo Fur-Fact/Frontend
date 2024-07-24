@@ -1094,6 +1094,11 @@
     "@jridgewell/resolve-uri" "^3.1.0"
     "@jridgewell/sourcemap-codec" "^1.4.14"
 
+"@kurkle/color@^0.3.0":
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/@kurkle/color/-/color-0.3.2.tgz#5acd38242e8bde4f9986e7913c8fdf49d3aa199f"
+  integrity sha512-fuscdXJ9G1qb7W8VdHi+IwRqij3lBkosAm4ydQtEmbY58OzHXqQhvlxqEkoz0yssNVn38bcpRWgA9PP+OGoisw==
+
 "@nodelib/fs.scandir@2.1.5":
   "integrity" "sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g=="
   "resolved" "https://registry.npmjs.org/@nodelib/fs.scandir/-/fs.scandir-2.1.5.tgz"
@@ -2104,6 +2109,7 @@
   "integrity" "sha512-mg3OPMV4hXywwpoDxu3Qda5xCKQi+vCTZq8S9J/EpkhB2HzKXq4SNFZE3+NK93JYxc8VMSep+lOUSC/RVKaBqw=="
   "resolved" "https://registry.npmjs.org/esbuild/-/esbuild-0.21.5.tgz"
   "version" "0.21.5"
+
   optionalDependencies:
     "@esbuild/aix-ppc64" "0.21.5"
     "@esbuild/android-arm" "0.21.5"
@@ -2686,6 +2692,7 @@
   "version" "1.0.5"
   dependencies:
     "has-tostringtag" "^1.0.0"
+
 
 "is-extglob@^2.1.1":
   "integrity" "sha512-SbKbANkN603Vi4jEZv49LeVJMn4yGwsbzZworEoyEiutsN3nJYdbO36zfhGJ6QEDpOZIFkDtnq5JRxmvl3jsoQ=="
@@ -3333,6 +3340,7 @@
   "integrity" "sha512-U19KtXqooqw967Vw0Qcn5cOvrX5Ejo9ORmOtJMzYWtCT4/WOfFLIZGGsVLxcd9UkBO0mSTZtXqhZBsWlHr7+Sg=="
   "resolved" "https://registry.npmjs.org/react-router-dom/-/react-router-dom-6.24.1.tgz"
   "version" "6.24.1"
+
   dependencies:
     "@remix-run/router" "1.17.1"
     "react-router" "6.24.1"
