@@ -2,6 +2,7 @@ import axios from "axios";
 import Navigation from "../../../components/common/Navigation/Navigation";
 import ResultItem from "../../../components/result/ResultItem";
 import { useEffect, useState } from "react";
+import useAuthStore from "../../../store/useAuthStore";
 
 interface FurData {
   id: number;
@@ -134,6 +135,9 @@ const distinction = [
 ];
 
 function ResultMobilePage() {
+  const { token } = useAuthStore();
+
+  const [resultDate, setResultDate] = useState<string>("");
   const [furData, setFurData] = useState<FurData | null>(null);
 
   const fetchTestResult = async () => {
@@ -142,13 +146,12 @@ function ResultMobilePage() {
         "http://localhost:3000/api/v1/tests/1",
         {
           headers: {
-            Authorization:
-              "Bearer " +
-              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwibmFtZSI6IuuwleynhOyasCIsImlhdCI6MTcyMTczNDc1MywiZXhwIjoxNzIxNzM4MzUzfQ.er5V6jcmQwPpfas2AQJH3qpXgPXrHnPtdea8eTrZPOw",
+            Authorization: `Bearer ${token}`,
           },
         }
       );
       console.log(response.data.data);
+      setResultDate(response.data.data.resultDate);
       setFurData(response.data.data.FurData[0]);
     } catch (e) {
       console.error(e);
@@ -159,6 +162,9 @@ function ResultMobilePage() {
     fetchTestResult();
   }, []);
 
+  /* prettier-ignore */
+  const slicedResultDate = `${resultDate.slice(0, 4)} ${resultDate.slice(5, 7)} ${resultDate.slice(8, 10)}`;
+
   return (
     <>
       <section className='flex flex-col justify-center bg-white px-5'>
@@ -166,10 +172,10 @@ function ResultMobilePage() {
           <h1 className='text-black font-bold text-3xl'>결과 조회</h1>
           <div className='flex gap-1 items-center mb-1'>
             <span className='text-black text-sm'>접수일 : </span>
-            <span className='text-black text-sm'>2024 06 25</span>
+            <span className='text-black text-sm'>{slicedResultDate}</span>
           </div>
         </div>
-        <div className='flex flex-col w-full h-fit overflow-y-auto bg-[#F5F7FC] rounded-md mt-2 py-1 px-2'>
+        <div className='relative flex flex-col w-full h-fit rounded-md mt-4 pt-16 pb-7 px-4 gap-6 overflow-hidden'>
           {furData &&
             elements.map((element, index) => (
               <ResultItem
@@ -183,6 +189,22 @@ function ResultMobilePage() {
                 )}
               />
             ))}
+          {/* 구분 색상 배경 */}
+          <div className='absolute top-0 left-0 w-[123px] h-full bg-[#F5F7FC]'>
+            <h2 className='font-semibold text-black text-lg z-10 py-3 bg-[#e7ecf8]'>
+              결핍
+            </h2>
+          </div>
+          <div className='absolute transform -translate-x-1/2 top-0 left-1/2 w-[105px] h-full bg-[#efefef]'>
+            <h2 className='font-semibold text-black text-lg z-10 py-3 bg-[#e6dfdf]'>
+              기준 범위
+            </h2>
+          </div>
+          <div className='absolute top-0 right-0 w-[123px] h-full bg-[#e8ece2]'>
+            <h2 className='font-semibold text-black text-lg z-10 py-3 bg-[#e2e9d2]'>
+              과다
+            </h2>
+          </div>
         </div>
         <div className='flex w-full items-center justify-start gap-1 h-12 border border-solid border-primary rounded-xl mt-5 px-3'>
           <span className='text-black text-sm'>위험 요소 :</span>

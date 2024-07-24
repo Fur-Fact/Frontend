@@ -12,7 +12,7 @@ function NotificationItem({ petName, iteration }: NotificationItemProps) {
   return (
     <div
       className='flex w-full justify-start items-center gap-3 py-4'
-      onClick={() => navigate("/result")}
+      onClick={() => navigate("/result/1")}
     >
       <div className='flex justify-center items-center w-7'>
         <img src={Alarm_Filled} alt='' className='w-full' />
