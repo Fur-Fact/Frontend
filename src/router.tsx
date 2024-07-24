@@ -30,7 +30,7 @@ export const router = createBrowserRouter([
         element: <Vet />,
       },
       {
-        path: 'result',
+        path: 'result/:testId',
         element: <VetResult />,
       },
     ],
