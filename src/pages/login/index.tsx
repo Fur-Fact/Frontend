@@ -74,7 +74,7 @@ const Login = () => {
             onChange={handlePasswordChange}
           />
           <div className="w-full flex flex-row justify-center">
-            <div className="flex flex-row justify-center">
+            <div className="flex flex-row text-xs justify-center">
               회원이 아니신가요? <Link className='text-primary font-bold hover:text-blue-500' to="/signup"> 회원가입</Link>
             </div>
           </div>

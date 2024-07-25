@@ -84,10 +84,10 @@ const PetCard = ({ data, HandleModal }: { data: PetData, HandleModal: (show: boo
         </div>
       </div>
       <div className="flex flex-row justify-between w-[350px] m-2">
-        <PetInfoCard type="나이" handleChange={setAge} value={age} isEdit={isEdit} />
+        <PetInfoCard type="나이" unit="살" handleChange={setAge} value={age} isEdit={isEdit} />
         <PetInfoCard type="성별" handleChange={setGender} value={gender} isEdit={isEdit} />
         <PetInfoCard type="종" handleChange={setSpecies} value={species} isEdit={isEdit} />
-        <PetInfoCard type="몸무게" handleChange={setWeight} value={weight} isEdit={isEdit} />
+        <PetInfoCard type="몸무게" unit="kg" handleChange={setWeight} value={weight} isEdit={isEdit} />
       </div>
       <div className="w-full font-bold text-left m-2">
         검사 결과

@@ -16,8 +16,6 @@ interface FurData {
   U: number;Cs: number;createdAt: string;updatedAt: string;
 }
 
-
-
 /* prettier-ignore */
 const elements = [
   { key: "Ca", label: "칼슘", color: "#40A5FD" },
