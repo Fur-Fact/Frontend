@@ -194,7 +194,7 @@ export default function VetResult() {
 
       if (response.status === 200) {
         setSavedComment(comment);
-        // postPush();
+        postPush();
       }
     } catch (error) {
       console.error('코멘트 등록 중 에러가 발생했습니다.', error);
