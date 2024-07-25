@@ -1,7 +1,5 @@
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import axios from "axios";
-import PetInfoCard from "./PetInfoCard";
-import PetInspectionCard from "./PetInspectionCard";
 import Modal from "./Modal";
 import AddInput from "../common/AddInput";
 import FullButton from "../common/FullButton";
@@ -9,8 +7,8 @@ import useAuthStore from "../../store/useAuthStore";
 
 const AddCard = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [photo, setPhoto] = useState(null);
-  const [photoPreview, setPhotoPreview] = useState(null);
+  const [photo, setPhoto] = useState<File | null>(null);
+  const [photoPreview, setPhotoPreview] = useState<string | null>(null);
   const [petData, setPetData] = useState({
     name: "",
     age: "",
@@ -22,25 +20,25 @@ const AddCard = () => {
 
   const { token } = useAuthStore();
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setPetData({ ...petData, [name]: value });
   };
 
-  const handlePhotoChange = (e) => {
-    const file = e.target.files[0];
+  const handlePhotoChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
     if (file) {
       setPhoto(file);
       const reader = new FileReader();
       reader.onloadend = () => {
-        setPhotoPreview(reader.result);
+        setPhotoPreview(reader.result as string);
       };
       reader.readAsDataURL(file);
     }
   };
 
   const triggerFileInput = () => {
-    document.getElementById("photo-input").click();
+    document.getElementById("photo-input")?.click();
   };
 
   const handleSubmit = async () => {
@@ -99,19 +97,11 @@ const AddCard = () => {
         <div className="font-bold">버튼을 눌러 기르고 계신 동물을 추가해주세요</div>
       </div>
       <div className="flex flex-row blur-sm justify-between w-[350px] m-2 z-10">
-        <PetInfoCard type="나이" value="예시" />
-        <PetInfoCard type="성별" value="예시" />
-        <PetInfoCard type="종" value="예시" />
-        <PetInfoCard type="몸무게" value="예시" />
       </div>
       <div className="w-full blur-sm font-bold text-left m-2 z-10">
         검사 결과
       </div>
       <div className="h-[480px] blur-sm overflow-scroll z-10">
-        <PetInspectionCard />
-        <PetInspectionCard />
-        <PetInspectionCard />
-        <PetInspectionCard />
       </div>
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         <div className="py-8">
