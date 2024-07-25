@@ -1,10 +1,19 @@
 // components/PortalModal.js
+import { ReactNode } from 'react';
 import ReactDOM from 'react-dom';
 
-const Modal = ({ isOpen, onClose, children }) => {
+
+type ModalProps = {
+  isOpen: boolean;
+  onClose: () => void;
+  children: ReactNode;
+}
+
+
+const Modal = ({ isOpen, onClose, children }:ModalProps) => {
   if (!isOpen) return null;
 
-  const handleOutsideClick = (e) => {
+  const handleOutsideClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     if (e.target === e.currentTarget) {
       onClose();
     }

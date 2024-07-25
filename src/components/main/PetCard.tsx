@@ -4,17 +4,8 @@ import PetInfoCard from "./PetInfoCard";
 import PetInspectionCard from "./PetInspectionCard";
 import axios from "axios";
 import useAuthStore from "../../store/useAuthStore";
+import { PetData } from "../../types";
 
-type PetData = {
-  id: number,
-  name: string,
-  image: string,
-  birthday: string,
-  gender: string,
-  species: string, 
-  weight: number|string,
-  age: string,  // age가 누락되어 있어 추가합니다.
-};
 
 const PetCard = ({ data, HandleModal }: { data: PetData, HandleModal: (show: boolean) => void }) => {
   const [age, setAge] = useState(data.age);
@@ -24,8 +15,6 @@ const PetCard = ({ data, HandleModal }: { data: PetData, HandleModal: (show: boo
   const [img, setImg] = useState(data.image);
   const [name, setName] = useState(data.name);
   const { token } = useAuthStore();
-
-
   const { isEdit, unSetEdit } = useModalStore();
 
   const HandleSaveEditData = async () => {
@@ -105,7 +94,7 @@ const PetCard = ({ data, HandleModal }: { data: PetData, HandleModal: (show: boo
       </div>
       <div className="h-[480px] overflow-scroll">
         {inspectionData.map((inspection) => (
-          <PetInspectionCard key={inspection.id} number={inspection.id} result={inspection.result} />
+          <PetInspectionCard key={inspection.id} number={inspection.id}  />
         ))}
       </div>
     </div>
