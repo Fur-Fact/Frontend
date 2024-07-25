@@ -43,7 +43,6 @@ function ResultItem({
   element,
   label,
   value,
-  color,
   distinction,
 }: ResultItemProps) {
   const [separation, setSeparation] = useState<Separation>();
@@ -150,25 +149,6 @@ function ResultItem({
       ? `${separationPercent + separationFilledPercent}%`
       : "0%";
 
-  const hexToRgbA = (hex: string, alpha = 0.2): string => {
-    let strippedHex = hex.replace(/^#/, ""); // 헥스코드에서 # 제거
-
-    // 헥스 코드가 3자리일 경우 6자리로 변환
-    if (strippedHex.length === 3) {
-      strippedHex = strippedHex
-        .split("")
-        .map((char) => char + char)
-        .join("");
-    }
-
-    // 헥스 코드를 RGB로 변환
-    const r = parseInt(strippedHex.substring(0, 2), 16);
-    const g = parseInt(strippedHex.substring(2, 4), 16);
-    const b = parseInt(strippedHex.substring(4, 6), 16);
-
-    // RGB를 RGBA로 변환
-    return `rgba(${r}, ${g}, ${b}, ${alpha})`;
-  };
 
   return (
     <div className='relative flex flex-col items-start z-10'>
