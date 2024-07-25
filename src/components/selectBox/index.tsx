@@ -10,7 +10,7 @@ function Dropdown({ options, selected, onChange }: DropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className='relative flex flex-col w-[14.25rem] text-left z-10'>
+    <div className='relative flex flex-col w-[14.25rem] text-left z-50'>
       <div className='flex'>
         <button
           type='button'
@@ -35,7 +35,7 @@ function Dropdown({ options, selected, onChange }: DropdownProps) {
       </div>
 
       {isOpen && (
-        <div className='absolute w-full top-full mt-2 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-50'>
+        <div className='absolute w-full top-full mt-2 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 '>
           <div className='py-1' role='menu'>
             {options.map((option) => (
               <button

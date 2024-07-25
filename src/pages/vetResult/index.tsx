@@ -16,8 +16,6 @@ interface FurData {
   U: number;Cs: number;createdAt: string;updatedAt: string;
 }
 
-
-
 /* prettier-ignore */
 const elements = [
   { key: "Ca", label: "칼슘", color: "#40A5FD" },
@@ -172,6 +170,8 @@ export default function VetResult() {
     setComment(e.target.value);
   };
 
+  
+
   const postComment = async () => {
     try {
       const response = await axios.post(
@@ -184,17 +184,37 @@ export default function VetResult() {
 
       if (response.status === 200) {
         setSavedComment(comment);
+        // postPush();
       }
     } catch (error) {
       console.error('코멘트 등록 중 에러가 발생했습니다.', error);
     }
   };
+  
+  const postPush = async () => {
+    try {
+      const response = await axios.post(
+        'http://localhost:3000/api/v1/tests/push',
+        {
+          test_id: testId,
+          phone: contactNumber,
+        }
+      );
 
+      if (response.status === 200) {
+        console.log('전송 성공');
+        
+      }
+    } catch (error) {
+      console.error('코멘트 등록 중 에러가 발생했습니다.', error);
+    }
+  };
   return (
     <div className='flex flex-col justify-between h-4/5 items-center mx-14'>
       <div className='w-full h-full bg-white p-4 shadow-md rounded-lg mt-[3%]'>
-        <div className='flex justify-between pr-4'>
+        <div className='flex justify-between pr-4 z-50'>
           <SelectBox
+            // options={otherTestLists?.map((test) => test.label) || []}
             options={otherTestLists?.map((test) => test.label) || []}
             selected={selectedOption}
             onChange={handleSelectChange}
@@ -213,20 +233,39 @@ export default function VetResult() {
           </div>
         </div>
 
-        <div className='max-w-full h-4/6 overflow-x-auto p-2 mt-1'>
-          {furData &&
-            elements.map((element, index) => (
-              <ResultItem
-                key={index}
-                element={element.key} // 원소 기호
-                label={element.label} // 한글
-                value={furData[element.key as keyof FurData] as number} // 원소 값
-                color={element.color}
-                distinction={distinction.filter(
-                  (d) => d.element === element.key
-                )} // 원소에 맞는 구분선
-              />
-            ))}
+        <div className='relative flex flex-col w-full h-[400px] rounded-md mt-4 pt-16 pb-7 px-4 gap-6 overflow-x-auto'>
+          <div className='absolute top-0 left-0 w-[388px] h-full bg-[#efefef] z-0'>
+            <h2 className='text-center font-semibold text-black text-lg z-10 py-3 bg-[#e6dfdf]'>
+              결핍
+            </h2>
+          </div>
+          <div className='absolute transform -translate-x-1/2 top-0 left-1/2 w-[389px] h-full bg-[#e5eaf6] z-0'>
+            <h2 className='text-center font-semibold text-black text-lg z-10 py-3 bg-[#d4def5]'>
+              기준 범위
+            </h2>
+          </div>
+          <div className='absolute top-0 right-0 w-[399px] h-full bg-[#e8ece2] z-0'>
+            <h2 className='text-center font-semibold text-black text-lg z-10 py-3 bg-[#e2e9d2]'>
+              과다
+            </h2>
+          </div>
+
+          {/* 스크롤 가능한 영역 */}
+          <div className='relative flex flex-col w-full h-full overflow-y-auto'>
+            {furData &&
+              elements.map((element, index) => (
+                <ResultItem
+                  key={index}
+                  element={element.key}
+                  label={element.label}
+                  value={furData[element.key as keyof FurData] as number}
+                  color={element.color}
+                  distinction={distinction.filter(
+                    (d) => d.element === element.key
+                  )}
+                />
+              ))}
+          </div>
         </div>
 
         {/* 코멘트 입력 또는 표시 */}
@@ -247,7 +286,7 @@ export default function VetResult() {
 
         {/* 입력 버튼 */}
         {!savedComment && (
-          <div className='flex justify-end mt-4'>
+          <div className='flex justify-end mt-1'>
             <button
               className='bg-blue-500 text-white px-4 py-2 rounded-md'
               onClick={postComment}
