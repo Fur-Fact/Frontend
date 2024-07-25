@@ -33,7 +33,7 @@ export const router = createBrowserRouter([
         element: <Alarm />,
       },
       {
-        path: "result",
+        path: "result/:id",
         element: <ResultMobilePage />,
       },
     ],

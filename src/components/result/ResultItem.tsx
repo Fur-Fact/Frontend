@@ -1,5 +1,5 @@
-
-import { useEffect, useState } from 'react';
+import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 
 interface Distinction {
   element: string;
@@ -150,42 +150,74 @@ function ResultItem({
       ? `${separationPercent + separationFilledPercent}%`
       : "0%";
 
+  const hexToRgbA = (hex: string, alpha = 0.2): string => {
+    let strippedHex = hex.replace(/^#/, ""); // 헥스코드에서 # 제거
+
+    // 헥스 코드가 3자리일 경우 6자리로 변환
+    if (strippedHex.length === 3) {
+      strippedHex = strippedHex
+        .split("")
+        .map((char) => char + char)
+        .join("");
+    }
+
+    // 헥스 코드를 RGB로 변환
+    const r = parseInt(strippedHex.substring(0, 2), 16);
+    const g = parseInt(strippedHex.substring(2, 4), 16);
+    const b = parseInt(strippedHex.substring(4, 6), 16);
+
+    // RGB를 RGBA로 변환
+    return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+  };
+
   return (
-    <div className='flex flex-col items-start py-2'>
+    <div className='relative flex flex-col items-start z-10'>
       <div className='flex'>
         <span className='w-7 text-start text-black text-sm'>{element}</span>
         <span className='w-14 text-start text-black text-sm'>{label}</span>
         <span className='w-20 text-start text-black text-sm'>{value}</span>
       </div>
-      <div className='flex justify-start items-center w-[94%] h-5'>
-        <div
-          className='h-full rounded-tr-full rounded-br-full shadow-md'
-          style={{ background: color, width: totalWidth }}
-        ></div>
+      <div className='relative flex justify-start items-center w-full h-6 border border-solid border-black border-opacity-10 mt-1'>
+        <motion.div
+          className='h-full shadow-md z-20 border-y border-r border-solid'
+          style={{
+            background: "#558ed6",
+            width: totalWidth,
+            borderColor: "#558ed6",
+          }}
+          initial={{ opacity: 0, width: 0 }}
+          animate={{ opacity: 1, width: totalWidth }}
+          transition={{ duration: 1 }}
+        ></motion.div>
+        {/* 구분선 */}
+        <div className='absolute top-0 left-[16.66%] w-[1px] h-full bg-black opacity-10'></div>
+        <div className='absolute top-0 left-[33.33%] w-[1px] h-full bg-black opacity-10'></div>
+        <div className='absolute top-0 left-[50%] w-[1px] h-full bg-black opacity-10'></div>
+        <div className='absolute top-0 left-[66.66%] w-[1px] h-full bg-black opacity-10'></div>
+        <div className='absolute top-0 left-[83.33%] w-[1px] h-full bg-black opacity-10'></div>
       </div>
-      <div className='flex w-full justify-between items-center'>
-        <span className='text-black text-[9px]'>
-          {distinctionValue?.distinction0}
-        </span>
-        <span className='text-black text-[9px]'>
-          {distinctionValue?.distinction1}
-        </span>
-        <span className='text-black text-[9px]'>
-          {distinctionValue?.distinction2}
-        </span>
-        <span className='text-black text-[9px]'>
-          {distinctionValue?.distinction3}
-        </span>
-        <span className='text-black text-[9px]'>
-          {distinctionValue?.distinction4}
-        </span>
-        <span className='text-black text-[9px]'>
-          {distinctionValue?.distinction5}
-        </span>
-        <span className='text-black text-[9px]'>
-          {distinctionValue?.distinction6}
-        </span>
-      </div>
+      {/* 구분값 */}
+      <span className='absolute transform -translate-x-1/2 -translate-y-1/2 -bottom-5 left-0 text-black text-[9px]'>
+        {distinctionValue?.distinction0}
+      </span>
+      <span className='absolute transform -translate-x-1/2 -translate-y-1/2 -bottom-5 left-[16.66%] text-black text-[9px]'>
+        {distinctionValue?.distinction1}
+      </span>
+      <span className='absolute transform -translate-x-1/2 -translate-y-1/2 -bottom-5 left-[33.33%] text-black text-[9px]'>
+        {distinctionValue?.distinction2}
+      </span>
+      <span className='absolute transform -translate-x-1/2 -translate-y-1/2 -bottom-5 left-[50%] text-black text-[9px]'>
+        {distinctionValue?.distinction3}
+      </span>
+      <span className='absolute transform -translate-x-1/2 -translate-y-1/2 -bottom-5 left-[66.66%] text-black text-[9px]'>
+        {distinctionValue?.distinction4}
+      </span>
+      <span className='absolute transform -translate-x-1/2 -translate-y-1/2 -bottom-5 left-[83.33%] text-black text-[9px]'>
+        {distinctionValue?.distinction5}
+      </span>
+      <span className='absolute transform -translate-x-1/2 -translate-y-1/2 -bottom-5 left-[100%] text-black text-[9px]'>
+        {distinctionValue?.distinction6}
+      </span>
     </div>
   );
 }
