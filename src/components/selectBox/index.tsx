@@ -1,11 +1,17 @@
 import { useState } from 'react';
 
-function Dropdown({ options, selected, onChange }) {
+type DropdownProps = {
+  options: string[];
+  selected: string;
+  onChange: (option: string) => void;
+};
+
+function Dropdown({ options, selected, onChange }: DropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <div className='relative flex flex-col w-[14.25rem] text-left z-10'>
-      <div className='flex '>
+      <div className='flex'>
         <button
           type='button'
           className='flex w-full justify-between rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none'

@@ -16,33 +16,7 @@ interface FurData {
   U: number;Cs: number;createdAt: string;updatedAt: string;
 }
 
-interface fetchTestResultResponseData {
-  result: string;
-  message: string;
-  data: {
-    id: number;
-    comment: string | null;
-    hospital: string;
-    receivedAt: string;
-    resultDate: string;
-    guardianName: string;
-    contactNumber: string | null;
-    petName: string;
-    species: string;
-    breed: string;
-    age: number;
-    gender: string;
-    weight: number;
-    hereditaryDisease: string | null;
-    feedingMethod: string;
-    supplements: string | null;
-    medication: string | null;
-    createdAt: string;
-    updatedAt: string;
-    isDeleted: boolean;
-    FurData: FurData[];
-  };
-}
+
 
 /* prettier-ignore */
 const elements = [
@@ -221,10 +195,11 @@ export default function VetResult() {
       <div className='w-full h-full bg-white p-4 shadow-md rounded-lg mt-[3%]'>
         <div className='flex justify-between pr-4'>
           <SelectBox
-            options={otherTestLists?.map((test) => test.label)}
+            options={otherTestLists?.map((test) => test.label) || []}
             selected={selectedOption}
             onChange={handleSelectChange}
           />
+
           <div className='flex items-center mt-2 text-right text-lg font-semibold text-gray-700 '>
             <span className='mr-2'> {guardianName} </span>
             <span className='text-gray-500 text-sm'>|</span>

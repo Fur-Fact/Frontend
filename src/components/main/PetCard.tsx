@@ -12,7 +12,7 @@ type PetData = {
   birthday: string,
   gender: string,
   species: string, 
-  weight: number|string,
+  weight: string,
   age: string,  // age가 누락되어 있어 추가합니다.
 };
 
@@ -105,7 +105,7 @@ const PetCard = ({ data, HandleModal }: { data: PetData, HandleModal: (show: boo
       </div>
       <div className="h-[480px] overflow-scroll">
         {inspectionData.map((inspection) => (
-          <PetInspectionCard key={inspection.id} number={inspection.id} result={inspection.result} />
+          <PetInspectionCard key={inspection.id} number={inspection.id}  />
         ))}
       </div>
     </div>

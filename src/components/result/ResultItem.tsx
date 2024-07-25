@@ -145,19 +145,6 @@ function ResultItem({
     }
   }, [separation]);
 
-  useEffect(() => {
-    if (separationFilledPercent !== null) {
-      if (element === "Se") {
-        console.log(
-          ((1 / 6) * (value - distinctionValue.distinction1)) /
-            separation!.separation2
-        );
-        console.log("separationPercent", separationPercent);
-        console.log("separationFilledPercent", separationFilledPercent);
-      }
-    }
-  }, [separationFilledPercent]);
-
   const totalWidth =
     separationPercent !== null && separationFilledPercent !== null
       ? `${separationPercent + separationFilledPercent}%`

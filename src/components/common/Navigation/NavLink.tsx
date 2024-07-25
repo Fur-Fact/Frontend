@@ -1,7 +1,14 @@
 import { Link, useLocation } from "react-router-dom";
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 
-const NavLink = ({ to, defaultImg, focusImg, altText }) => {
+interface NavLinkProps {
+  to: string;
+  defaultImg: string;
+  focusImg: string;
+  altText: string;
+}
+
+const NavLink = ({ to, defaultImg, focusImg, altText }:NavLinkProps) => {
   const location = useLocation();
   const [hovered, setHovered] = useState(false);
   const isActive = location.pathname === to;

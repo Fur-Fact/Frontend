@@ -1,4 +1,8 @@
-const PetInspectionCard = ({number,resutl}) => {
+type PetInspectionCardProps = {
+  number: number;
+}
+
+const PetInspectionCard = ({number}:PetInspectionCardProps) => {
   return(
     <div className="flex flex-col justify-center items-start text-black	hover:text-white  bg-white hover:bg-primary w-[357px] h-[70px] shadow-lg rounded-lg m-2 p-4">
       <div className="text-sm font-bold	">{number}회차 검사 결과</div>

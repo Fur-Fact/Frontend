@@ -14,13 +14,14 @@ type PropType = {
 
 type PetData = {
   id: number,
-  petName: string,
-  imgUrl: string,
+  name: string,
+  image: string,
   birthday: string,
   gender: string,
-  species: string,
-  weight: number,
-}
+  species: string, 
+  weight: string,
+  age: string,  // age가 누락되어 있어 추가합니다.
+};
 
 const EmblaCarousel: React.FC<PropType> = ({ slides, options, HandleModal, setSelected }) => {
   const [emblaRef, emblaApi] = useEmblaCarousel({align:'center',...options})

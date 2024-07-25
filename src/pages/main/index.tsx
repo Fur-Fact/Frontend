@@ -5,14 +5,24 @@ import useModalStore from '../../store/useEditModeStore';
 import Navigation from '../../components/common/Navigation/Navigation';
 import axios from 'axios';
 import useAuthStore from '../../store/useAuthStore';
-import { useDotButton } from '../../components/main/Carousel/CarouselDotButton';
+
+type PetData = {
+  id: number,
+  name: string,
+  image: string,
+  birthday: string,
+  gender: string,
+  species: string, 
+  weight: number,
+  age: string,  // age가 누락되어 있어 추가합니다.
+};
 
 const MainPage = () => {
 
-  const { isEdit, setEdit, unSetEdit } = useModalStore();
+  const { isEdit, setEdit} = useModalStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [chooseDelete, setChooseDelete] = useState(false);
-  const [pets, setPets] = useState([]);
+  const [pets, setPets] = useState<PetData[]>([]);
   const { token } = useAuthStore();
   const [ selectedPet, setSelectedPet ] = useState(0);
 

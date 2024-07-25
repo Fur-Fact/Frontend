@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useState, ChangeEvent } from 'react';
 import Input from '../../components/common/Input';
 import { Link, useNavigate } from 'react-router-dom';
 import FullButton from '../../components/common/FullButton';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 
 const SignUp = () => {
   const [name, setName] = useState('');
@@ -19,35 +19,35 @@ const SignUp = () => {
 
   const navigate = useNavigate();
 
-  const handleNameChange = (e:any) => {
+  const handleNameChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setName(value);
-    setIsNameValid(value.length >= 2); // 예: 이름은 최소 2자 이상
+    setIsNameValid(value.length >= 2);
   };
 
-  const handleIdChange = (e:any) => {
+  const handleIdChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setId(value);
-    setIsIdValid(value.length >= 5); // 예: 아이디는 최소 5자 이상
+    setIsIdValid(value.length >= 5);
   };
 
-  const handlePasswordChange = (e:any) => {
+  const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setPassword(value);
-    setIsPasswordValid(value.length >= 6); // 예: 비밀번호는 최소 6자 이상
+    setIsPasswordValid(value.length >= 6); 
     setIsConfirmPasswordValid(value === confirmPassword);
   };
 
-  const handleConfirmPasswordChange = (e:any) => {
+  const handleConfirmPasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setConfirmPassword(value);
     setIsConfirmPasswordValid(value === password);
   };
 
-  const handlePhoneChange = (e:any) => {
+  const handlePhoneChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setPhone(value);
-    setIsPhoneValid(/^\d{10,11}$/.test(value)); // 예: 휴대폰 번호는 10~11자리 숫자
+    setIsPhoneValid(/^\d{10,11}$/.test(value));
   };
 
   const handleSignUp = async () => {
@@ -64,11 +64,12 @@ const SignUp = () => {
         navigate('/login');
       }
     } catch (error) {
-      if (error.response && error.response.status === 400) {
+      const axiosError = error as AxiosError;
+      if (axiosError.response && axiosError.response.status === 400) {
         alert('중복된 이메일 또는 필드 누락');
       } else {
         alert('error');
-        console.log(error);
+        console.log(axiosError);
       }
     }
   };
