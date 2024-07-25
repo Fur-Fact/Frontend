@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import Carousel from '../../components/main/Carousel/Carousel';
 import Modal from '../../components/main/Modal';
 import useModalStore from '../../store/useEditModeStore';
-import Navigation from '../../components/common/Navigation/Navigation';
 import axios from 'axios';
 import useAuthStore from '../../store/useAuthStore';
 import { PetData } from '../../types';

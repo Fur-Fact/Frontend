@@ -1,5 +1,4 @@
 import NotificationItem from "../../components/alarm/NotificationItem";
-import Navigation from "../../components/common/Navigation/Navigation";
 
 const data = [
   { petName: "나비", iteration: 1 },

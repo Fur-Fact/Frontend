@@ -52,6 +52,7 @@ const PetCard = ({ data, HandleModal }: { data: PetData, HandleModal: (show: boo
 
   useEffect(() => {
     console.log(data);
+    setAge(data.age);
     setWeight(data.weight);
     setGender(data.gender);
     setSpecies(data.species);
@@ -67,31 +68,31 @@ const PetCard = ({ data, HandleModal }: { data: PetData, HandleModal: (show: boo
       age: "비비",
     }
   ]
-  const [ inspectionDatas, setInspectionDatas ] = useState([]);
+  // const [ inspectionDatas, setInspectionDatas ] = useState([]);
 
-  useEffect(() => {
-    getInspectionData();
-  }, []);
+  // useEffect(() => {
+  //   getInspectionData();
+  // }, []);
 
-  const getInspectionData = async () => {
-    try {
-      const response = await axios.get(
-        `http://localhost:3000/api/v1/tests/vet/search?&petName=${name}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          }
-        }
+  // const getInspectionData = async () => {
+  //   try {
+  //     const response = await axios.get(
+  //       `http://localhost:3000/api/v1/tests/vet/search?&petName=${name}`,
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${token}`,
+  //         }
+  //       }
 
-      );
-      if (response.status === 200) {
-        setInspectionDatas(response.data.data);
-      }
-    } catch (error) {
-      console.error('데이터 요청 중 에러가 발생했습니다.', error);
-      console.log(name)
-    }
-  };
+  //     );
+  //     if (response.status === 200) {
+  //       setInspectionDatas(response.data.data);
+  //     }
+  //   } catch (error) {
+  //     console.error('데이터 요청 중 에러가 발생했습니다.', error);
+  //     console.log(name)
+  //   }
+  // };
 
 
   return (
