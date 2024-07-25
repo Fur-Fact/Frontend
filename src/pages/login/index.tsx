@@ -32,7 +32,7 @@ const Login = () => {
         email: id,
         password: password,
       });
-
+      console.log(response);
       if (response.status === 200) {
         alert('로그인 되었습니다!');
         setToken(response.data.access_token);
@@ -58,7 +58,7 @@ const Login = () => {
             안녕하세요,
           </h1>
           <h1 className="text-5xl">
-            펄팩트입니다!
+            퍼팩트입니다!
           </h1>
         </div>
         <div>

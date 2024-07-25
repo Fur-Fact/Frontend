@@ -167,7 +167,7 @@ function ResultMobilePage() {
 
   return (
     <>
-      <section className='flex flex-col justify-center bg-white px-5'>
+      <section className='flex flex-col justify-center z-0 bg-white px-5 main-content'>
         <div className='flex w-full justify-start items-end gap-2 mt-7 px-2'>
           <h1 className='text-black font-bold text-3xl'>결과 조회</h1>
           <div className='flex gap-1 items-center mb-1'>
@@ -208,7 +208,7 @@ function ResultMobilePage() {
         </div>
         <div className='flex w-full items-center justify-start gap-1 h-12 border border-solid border-primary rounded-xl mt-5 px-3'>
           <span className='text-black text-sm'>위험 요소 :</span>
-          <span className='text-black text-sm'>칼슘, 아연, 구리, 셀레늄</span>
+          <span className='text-black text-sm'>칼슘, 마그네슘, 아연, 셀레늄, 크롬, 바나듐</span>
         </div>
         <div className='flex w-full justify-end mt-2'>
           <button className='flex justify-center items-center w-44 h-9 bg-primary rounded-3xl text-white font-bold text-sm whitespace-nowrap'>
