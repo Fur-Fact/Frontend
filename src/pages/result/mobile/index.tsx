@@ -190,13 +190,13 @@ function ResultMobilePage() {
               />
             ))}
           {/* 구분 색상 배경 */}
-          <div className='absolute top-0 left-0 w-[123px] h-full bg-[#F5F7FC]'>
-            <h2 className='font-semibold text-black text-lg z-10 py-3 bg-[#e7ecf8]'>
+          <div className='absolute top-0 left-0 w-[123px] h-full bg-[#efefef]'>
+            <h2 className='font-semibold text-black text-lg z-10 py-3 bg-[#e6dfdf]'>
               결핍
             </h2>
           </div>
-          <div className='absolute transform -translate-x-1/2 top-0 left-1/2 w-[105px] h-full bg-[#efefef]'>
-            <h2 className='font-semibold text-black text-lg z-10 py-3 bg-[#e6dfdf]'>
+          <div className='absolute transform -translate-x-1/2 top-0 left-1/2 w-[105px] h-full bg-[#e5eaf6]'>
+            <h2 className='font-semibold text-black text-lg z-10 py-3 bg-[#d4def5]'>
               기준 범위
             </h2>
           </div>
