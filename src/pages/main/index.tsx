@@ -5,26 +5,15 @@ import useModalStore from '../../store/useEditModeStore';
 import Navigation from '../../components/common/Navigation/Navigation';
 import axios from 'axios';
 import useAuthStore from '../../store/useAuthStore';
-
-type PetData = {
-  id: number,
-  name: string,
-  image: string,
-  birthday: string,
-  gender: string,
-  species: string, 
-  weight: number,
-  age: string,  // age가 누락되어 있어 추가합니다.
-};
+import { PetData } from '../../types';
 
 const MainPage = () => {
-
-  const { isEdit, setEdit} = useModalStore();
+  const { isEdit, setEdit } = useModalStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [chooseDelete, setChooseDelete] = useState(false);
   const [pets, setPets] = useState<PetData[]>([]);
   const { token } = useAuthStore();
-  const [ selectedPet, setSelectedPet ] = useState(0);
+  const [selectedPet, setSelectedPet] = useState(0);
 
   useEffect(() => {
     getPetData();
@@ -48,17 +37,17 @@ const MainPage = () => {
 
   const deletePetData = async (id: number) => {
     try {
-      const response = await axios.delete(`http://localhost:3000/api/v1/pets/${pets[selectedPet].id}`, {
+      const response = await axios.delete(`http://localhost:3000/api/v1/pets/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
       if (response.status === 200) {
-        setPets(pets.filter(pet => pets[selectedPet].id !== id));
+        setPets(pets.filter(pet => pet.id !== id));
         setIsModalOpen(false);
       }
     } catch (error) {
-      console.error( error);
+      console.error('Error deleting pet data:', error);
     }
   };
 
@@ -67,7 +56,7 @@ const MainPage = () => {
   };
 
   const handleDelete = () => {
-    deletePetData(0);//현재 id를 구분할 수 있어야함
+    deletePetData(pets[selectedPet].id);
     setChooseDelete(true);
     console.log(isEdit);
   };
@@ -82,11 +71,10 @@ const MainPage = () => {
     setEdit();
     setIsModalOpen(false);
   };
-  
+
   const setSelected = (index: number) => {
     setSelectedPet(index);
-  }
-
+  };
 
   return (
     <section className="flex flex-col justify-center bg-[#FEFEFE]">
@@ -97,7 +85,7 @@ const MainPage = () => {
           {chooseDelete ? (
             <>
               <div>{selectedPet}번 펫 삭제하시겠습니까?</div>
-              <div onClick={()=>handleDelete}>예</div>
+              <div onClick={handleDelete}>예</div>
               <div onClick={() => setChooseDelete(false)}>아니오</div>
             </>
           ) : (

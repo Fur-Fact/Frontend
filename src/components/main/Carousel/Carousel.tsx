@@ -4,6 +4,7 @@ import { DotButton, useDotButton } from './CarouselDotButton'
 import useEmblaCarousel from 'embla-carousel-react'
 import PetCard from '../PetCard'
 import AddCard from '../AddCard'
+import { PetData } from '../../../types'
 
 type PropType = {
   slides: PetData[]
@@ -11,17 +12,6 @@ type PropType = {
   HandleModal: (value:boolean) => void
   setSelected: (value: number) => void
 }
-
-type PetData = {
-  id: number,
-  name: string,
-  image: string,
-  birthday: string,
-  gender: string,
-  species: string, 
-  weight: string,
-  age: string,  // age가 누락되어 있어 추가합니다.
-};
 
 const EmblaCarousel: React.FC<PropType> = ({ slides, options, HandleModal, setSelected }) => {
   const [emblaRef, emblaApi] = useEmblaCarousel({align:'center',...options})
