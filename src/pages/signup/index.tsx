@@ -52,7 +52,7 @@ const SignUp = () => {
 
   const handleSignUp = async () => {
     try {
-      const response = await axios.post('http://3.37.180.182:3000/api/v1/users/signup', {
+      const response = await axios.post('http://localhost:3000//api/v1/users/signup', {
         name: name,
         email: id,
         password: password,
@@ -118,7 +118,7 @@ const SignUp = () => {
             onChange={handleConfirmPasswordChange}
           />
           <div className="w-full flex flex-row justify-center">
-            <div className="flex flex-row justify-center">
+            <div className="flex flex-row text-xs justify-center">
               계정이 있으신가요? <Link className='text-primary font-bold hover:text-blue-500' to="/login">로그인</Link>
             </div>
           </div>

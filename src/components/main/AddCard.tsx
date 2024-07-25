@@ -1,5 +1,6 @@
 import { ChangeEvent, useState } from "react";
 import axios from "axios";
+import { motion } from "framer-motion";
 import Modal from "./Modal";
 import AddInput from "../common/AddInput";
 import FullButton from "../common/FullButton";
@@ -116,20 +117,31 @@ const AddCard = () => {
             }
           </div>
           <AddInput placeholder="동물 이름" name="name" value={petData.name} onChange={handleInputChange} />
-          <div className="flex">
-            <input className="mr-1 text-xs px-4 h-14 my-1 border-2 rounded-xl border-solid border-[#E5E4E3]" placeholder="나이" type="text" name="age" value={petData.age} onChange={handleInputChange} />
-            <input className="ml-1 text-xs px-4 h-14 my-1 border-2 rounded-xl border-solid border-[#E5E4E3]" placeholder="몸무게" type="text" name="weight" value={petData.weight} onChange={handleInputChange} />
+          <div className="flex flex-row justify-between">
+            <input className="w-[164px] mr-1 text-xs px-4 h-14 my-1 border-2 rounded-xl border-solid border-[#E5E4E3]" placeholder="나이" type="text" name="age" value={petData.age} onChange={handleInputChange} />
+            <input className="w-[164px] ml-1 text-xs px-4 h-14 my-1 border-2 rounded-xl border-solid border-[#E5E4E3]" placeholder="몸무게" type="text" name="weight" value={petData.weight} onChange={handleInputChange} />
           </div>
-          <div className="flex">
-            <div className={`w-[164px] mr-1 flex flex-row justify-center items-center text-xs px-4 h-14 my-1 border-2 rounded-xl border-solid cursor-pointer ${petData.gender === "male" ? "bg-primary text-white" : "border-[#E5E4E3]"}`} onClick={() => setPetData({ ...petData, gender: "male" })}>
+          <div className="flex flex-row justify-between">
+            <motion.div
+              className={`w-[164px] mr-1 flex flex-row justify-center items-center text-xs px-4 h-14 my-1 border-2 rounded-xl border-solid cursor-pointer ${petData.gender === "male" ? "bg-primary text-white" : "border-[#E5E4E3]"}`}
+              whileTap={{ scale: 0.9 }}
+              whileHover={{ scale: 1.05 }}
+              onClick={() => setPetData({ ...petData, gender: "male" })}
+            >
               남성
-            </div>
-            <div className={`w-[164px] ml-1 flex flex-row justify-center items-center text-xs px-4 h-14 my-1 border-2 rounded-xl border-solid cursor-pointer ${petData.gender === "female" ? "bg-primary text-white" : "border-[#E5E4E3]"}`} onClick={() => setPetData({ ...petData, gender: "female" })}>
+            </motion.div>
+            <motion.div
+              className={`w-[164px] ml-1 flex flex-row justify-center items-center text-xs px-4 h-14 my-1 border-2 rounded-xl border-solid cursor-pointer ${petData.gender === "female" ? "bg-primary text-white" : "border-[#E5E4E3]"}`}
+              whileTap={{ scale: 0.9 }}
+              whileHover={{ scale: 1.05 }}
+              onClick={() => setPetData({ ...petData, gender: "female" })}
+            >
               여성
-            </div>
+            </motion.div>
           </div>
           <AddInput placeholder="종" name="species" value={petData.species} onChange={handleInputChange} />
           <AddInput placeholder="먹이 정보" name="feed" value={petData.feed} onChange={handleInputChange} />
+          <div className="h-2"></div>
           <FullButton disabled={false} onClick={handleSubmit}>추가하기</FullButton>
         </div>
       </Modal>

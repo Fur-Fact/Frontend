@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import SelectBox from '../../components/selectBox';
 import ResultItem from '../../components/result/ResultItem';
+import useAuthStore from '../../store/useAuthStore';
 
 interface Option {
   id: number;
@@ -104,10 +105,19 @@ export default function VetResult() {
     }
   }, [testId, contactNumber]);
 
+  const { token } = useAuthStore();
+
+
   const getChartData = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:3000/api/v1/tests/${testId}`
+        `http://localhost:3000/api/v1/tests/${testId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          }
+        }
+        
       );
 
       if (response.status === 200) {

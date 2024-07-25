@@ -9,7 +9,7 @@ import NavLink from "./NavLink";
 
 const Navigation = () => {
   return (
-    <div className="w-full flex flex-row justify-around items-center h-16 bg-white">
+    <div className="w-full flex flex-row justify-around items-center h-16 z-10 bg-white">
       <NavLink to="/" defaultImg={Home} focusImg={Home_Focus} altText="Alarm" />
       <NavLink to="/alarm" defaultImg={Alarm} focusImg={Alarm_Focus} altText="Home" />
       <NavLink to="/login" defaultImg={MyPage} focusImg={MyPage_Focus} altText="MyPage" />

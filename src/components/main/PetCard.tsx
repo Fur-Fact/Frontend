@@ -5,6 +5,7 @@ import PetInspectionCard from "./PetInspectionCard";
 import axios from "axios";
 import useAuthStore from "../../store/useAuthStore";
 import { PetData } from "../../types";
+import { useNavigate } from "react-router-dom";
 
 
 const PetCard = ({ data, HandleModal }: { data: PetData, HandleModal: (show: boolean) => void }) => {
@@ -16,6 +17,9 @@ const PetCard = ({ data, HandleModal }: { data: PetData, HandleModal: (show: boo
   const [name, setName] = useState(data.name);
   const { token } = useAuthStore();
   const { isEdit, unSetEdit } = useModalStore();
+
+  const navigate = useNavigate();
+
 
   const HandleSaveEditData = async () => {
     await putPetData();
@@ -48,6 +52,7 @@ const PetCard = ({ data, HandleModal }: { data: PetData, HandleModal: (show: boo
 
   useEffect(() => {
     console.log(data);
+    setAge(data.age);
     setWeight(data.weight);
     setGender(data.gender);
     setSpecies(data.species);
@@ -55,12 +60,40 @@ const PetCard = ({ data, HandleModal }: { data: PetData, HandleModal: (show: boo
     setName(data.name);
   }, [data]);
 
-  // 임의의 검사 결과 데이터
-  const inspectionData = [
-    { id: 1, result: "검사 결과 1" },
-    { id: 2, result: "검사 결과 2" },
-    { id: 3, result: "검사 결과 3" },
-  ];
+
+  const  inspectionData = [
+    {
+      id: 1,
+      petName: "두부",
+      age: "비비",
+    }
+  ]
+  // const [ inspectionDatas, setInspectionDatas ] = useState([]);
+
+  // useEffect(() => {
+  //   getInspectionData();
+  // }, []);
+
+  // const getInspectionData = async () => {
+  //   try {
+  //     const response = await axios.get(
+  //       `http://localhost:3000/api/v1/tests/vet/search?&petName=${name}`,
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${token}`,
+  //         }
+  //       }
+
+  //     );
+  //     if (response.status === 200) {
+  //       setInspectionDatas(response.data.data);
+  //     }
+  //   } catch (error) {
+  //     console.error('데이터 요청 중 에러가 발생했습니다.', error);
+  //     console.log(name)
+  //   }
+  // };
+
 
   return (
     <div className="w-full flex flex-col items-center">
@@ -84,17 +117,17 @@ const PetCard = ({ data, HandleModal }: { data: PetData, HandleModal: (show: boo
         </div>
       </div>
       <div className="flex flex-row justify-between w-[350px] m-2">
-        <PetInfoCard type="나이" handleChange={setAge} value={age} isEdit={isEdit} />
-        <PetInfoCard type="성별" handleChange={setGender} value={gender} isEdit={isEdit} />
-        <PetInfoCard type="종" handleChange={setSpecies} value={species} isEdit={isEdit} />
-        <PetInfoCard type="몸무게" handleChange={setWeight} value={weight} isEdit={isEdit} />
+        <PetInfoCard type="나이" unit="살"  value={age}  />
+        <PetInfoCard type="성별" value={gender}  />
+        <PetInfoCard type="종"  value={species}  />
+        <PetInfoCard type="몸무게" unit="kg"  value={weight}  />
       </div>
       <div className="w-full font-bold text-left m-2">
         검사 결과
       </div>
       <div className="h-[480px] overflow-scroll">
         {inspectionData.map((inspection) => (
-          <PetInspectionCard key={inspection.id} number={inspection.id}  />
+          <PetInspectionCard key={inspection.id} number={inspection.id} onClick={()=>navigate('/result/1')}  />
         ))}
       </div>
     </div>

@@ -1,19 +1,8 @@
 import NotificationItem from "../../components/alarm/NotificationItem";
-import Navigation from "../../components/common/Navigation/Navigation";
 
 const data = [
-  { petName: "꼬미", iteration: 2 },
-  { petName: "둘리", iteration: 3 },
-  { petName: "하니", iteration: 1 },
-  { petName: "보리", iteration: 4 },
-  { petName: "초코", iteration: 5 },
-  { petName: "사랑이", iteration: 2 },
-  { petName: "구름이", iteration: 6 },
-  { petName: "별이", iteration: 3 },
-  { petName: "눈송이", iteration: 7 },
-  { petName: "바다", iteration: 4 },
-  { petName: "모래", iteration: 8 },
-  { petName: "햇님이", iteration: 1 },
+  { petName: "나비", iteration: 1 },
+
 ];
 
 function AlarmPage() {
@@ -33,7 +22,6 @@ function AlarmPage() {
           ))}
         </div>
       </section>
-      <Navigation />
     </>
   );
 }

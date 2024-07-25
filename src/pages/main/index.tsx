@@ -2,12 +2,15 @@ import { useEffect, useState } from 'react';
 import Carousel from '../../components/main/Carousel/Carousel';
 import Modal from '../../components/main/Modal';
 import useModalStore from '../../store/useEditModeStore';
-import Navigation from '../../components/common/Navigation/Navigation';
 import axios from 'axios';
 import useAuthStore from '../../store/useAuthStore';
 import { PetData } from '../../types';
+import { useNavigate } from 'react-router-dom';
+
 
 const MainPage = () => {
+  const navigate = useNavigate();
+
   const { isEdit, setEdit } = useModalStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [chooseDelete, setChooseDelete] = useState(false);
@@ -16,6 +19,10 @@ const MainPage = () => {
   const [selectedPet, setSelectedPet] = useState(0);
 
   useEffect(() => {
+    if (!token) {
+      navigate('/login');
+      return;
+    }
     getPetData();
   }, []);
 
@@ -79,7 +86,6 @@ const MainPage = () => {
   return (
     <section className="flex flex-col justify-center bg-[#FEFEFE]">
       <Carousel slides={pets} HandleModal={handleModalOpen} setSelected={setSelected} />
-      <Navigation />
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         <div className="flex flex-col justify-center items-center">
           {chooseDelete ? (
@@ -97,6 +103,9 @@ const MainPage = () => {
               </div>
             </>
           )}
+          {
+            
+          }
         </div>
       </Modal>
     </section>
