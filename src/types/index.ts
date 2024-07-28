@@ -9,3 +9,9 @@ export interface PetData {
   age: string;
   feed: string;
 }
+
+export interface InspectionData {
+  id: number;
+  resultDate: string;
+  comment: string;
+}

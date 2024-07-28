@@ -4,7 +4,7 @@ import PetInfoCard from "./PetInfoCard";
 import PetInspectionCard from "./PetInspectionCard";
 import axios from "axios";
 import useAuthStore from "../../store/useAuthStore";
-import { PetData } from "../../types";
+import { InspectionData, PetData } from "../../types";
 import { useNavigate } from "react-router-dom";
 import Setting from "../../assets/setting.png"
 
@@ -140,7 +140,7 @@ const PetCard = ({ data, HandleModal }: { data: PetData, HandleModal: (show: boo
         )}
       </div>
       <div className="h-[480px] overflow-scroll">
-        {inspectionData.map((inspection, index) => (
+        {inspectionData.map((inspection:InspectionData, index) => (
           <PetInspectionCard key={inspection.id} date={inspection.resultDate} comment={inspection.comment} number={index+1} onClick={()=>navigate(`/result/${inspection.id}`)}  />
         ))}
       </div>
