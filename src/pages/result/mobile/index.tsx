@@ -3,6 +3,7 @@ import Navigation from "../../../components/common/Navigation/Navigation";
 import ResultItem from "../../../components/result/ResultItem";
 import { useEffect, useState } from "react";
 import useAuthStore from "../../../store/useAuthStore";
+import { useParams } from "react-router-dom";
 
 interface FurData {
   id: number;
@@ -136,14 +137,16 @@ const distinction = [
 
 function ResultMobilePage() {
   const { token } = useAuthStore();
+  const { id } = useParams<{ id: string }>();
 
   const [resultDate, setResultDate] = useState<string>("");
   const [furData, setFurData] = useState<FurData | null>(null);
+  const [comment, setComment] = useState<string | null>(null);
 
   const fetchTestResult = async () => {
     try {
       const response = await axios.get<fetchTestResultResponseData>(
-        "http://localhost:3000/api/v1/tests/1",
+        `http://localhost:3000/api/v1/tests/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -153,6 +156,7 @@ function ResultMobilePage() {
       console.log(response.data.data);
       setResultDate(response.data.data.resultDate);
       setFurData(response.data.data.FurData[0]);
+      setComment(response.data.data.comment);
     } catch (e) {
       console.error(e);
     }
@@ -206,15 +210,34 @@ function ResultMobilePage() {
             </h2>
           </div>
         </div>
-        <div className='flex w-full items-center justify-start gap-1 h-12 border border-solid border-primary rounded-xl mt-5 px-3'>
-          <span className='text-black text-sm'>위험 요소 :</span>
-          <span className='text-black text-sm'>칼슘, 마그네슘, 아연, 셀레늄, 크롬, 바나듐</span>
+        <div className='flex flex-col w-full items-center justify-start  h-20 border border-solid border-primary rounded-xl '>
+          <div className="flex w-full mt-2 px-3 gap-1">
+            <span className='text-black text-sm'>위험 요소 :</span>
+            <span className='text-black text-sm'>칼슘, 마그네슘, 아연, 셀레늄, 크롬, 바나듐</span>
+          </div>
+          <div className="flex w-full px-3 gap-1 ">
+            <span className='text-black text-sm whitespace-nowrap'>수의사 코멘트 :</span>
+            <span className='text-black text-sm'>전체적으로 건강하고 잘 크고 있습니다 다만, 사료에서 칼슘만 조금 더 보충해주세요</span>
+          </div>
+
         </div>
-        <div className='flex w-full justify-end mt-2'>
-          <button className='flex justify-center items-center w-44 h-9 bg-primary rounded-3xl text-white font-bold text-sm whitespace-nowrap'>
-            수의사 코멘트 요청하기
-          </button>
-        </div>
+        {
+          comment ? 
+          <div className='flex w-full items-center justify-start gap-1 h-12 border border-solid border-primary rounded-xl mt-5 px-3'>
+            <span className='text-black text-sm whitespace-nowrap'>수의사 코멘트 :</span>
+            <span className='text-black text-sm'>{comment}</span>
+          </div>
+          : null
+        }
+        {/* {comment ? (
+            <div className='text-black text-sm'></div>
+          ) : (
+            <div className='flex w-full justify-end mt-2'>
+              <button className='flex justify-center items-center w-44 h-9 bg-primary rounded-3xl text-white font-bold text-sm whitespace-nowrap'>
+                수의사 코멘트 요청하기
+              </button>
+            </div>
+          )} */}
       </section>
       <Navigation />
     </>
