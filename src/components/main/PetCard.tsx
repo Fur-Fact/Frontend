@@ -4,7 +4,7 @@ import PetInfoCard from './PetInfoCard';
 import PetInspectionCard from './PetInspectionCard';
 import axios from 'axios';
 import useAuthStore from '../../store/useAuthStore';
-import { PetData } from '../../types';
+import { InspectionData, PetData } from '../../types';
 import { useNavigate } from 'react-router-dom';
 
 const PetCard = ({
@@ -71,38 +71,38 @@ const PetCard = ({
     }, 2000);
   }, [data]);
 
-  const inspectionData = [
-    {
-      id: 1,
-      petName: '두부',
-      age: '비비',
-    },
-  ];
-  // const [ inspectionDatas, setInspectionDatas ] = useState([]);
+  // const inspectionData = [
+  //   {
+  //     id: 1,
+  //     petName: '두부',
+  //     age: '비비',
+  //   },
+  // ];
+  const [ inspectionDatas, setInspectionDatas ] = useState<InspectionData[]>([]);
 
-  // useEffect(() => {
-  //   getInspectionData();
-  // }, []);
+  useEffect(() => {
+    getInspectionData();
+  }, []);
 
-  // const getInspectionData = async () => {
-  //   try {
-  //     const response = await axios.get(
-  //       `http://localhost:3000/api/v1/tests/vet/search?&petName=${name}`,
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${token}`,
-  //         }
-  //       }
+  const getInspectionData = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:3000/api/v1/tests/vet/search?&petName=${name}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          }
+        }
 
-  //     );
-  //     if (response.status === 200) {
-  //       setInspectionDatas(response.data.data);
-  //     }
-  //   } catch (error) {
-  //     console.error('데이터 요청 중 에러가 발생했습니다.', error);
-  //     console.log(name)
-  //   }
-  // };
+      );
+      if (response.status === 200) {
+        setInspectionDatas(response.data.data);
+      }
+    } catch (error) {
+      console.error('데이터 요청 중 에러가 발생했습니다.', error);
+      console.log(name)
+    }
+  };
 
   return (
     <div className='w-full flex flex-col items-center'>
@@ -136,15 +136,11 @@ const PetCard = ({
             <div className='skeleton bg-gray_400 w-[357px] h-[70px] m-2 '></div>
           </>
         ) : (
-          <>
-            {inspectionData.map((inspection) => (
-              <PetInspectionCard
-                key={inspection.id}
-                number={inspection.id}
-                onClick={() => navigate('/result/1')}
-              />
+          <div className="h-[480px] overflow-scroll">
+            {inspectionDatas.map((inspection, index) => (
+              <PetInspectionCard key={inspection.id} date={inspection.resultDate} comment={inspection.comment} number={index+1} onClick={()=>navigate(`/result/${inspection.id}`)}  />
             ))}
-          </>
+          </div>
         )}
       </div>
     </div>

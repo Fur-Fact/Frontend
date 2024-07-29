@@ -64,7 +64,7 @@ const EmblaCarousel: React.FC<PropType> = ({ slides, options, HandleModal, setSe
   };
 
   const handleSubmit = async () => {
-    if (!photo|| !petData.name || !petData.age || !petData.weight || !petData.gender || !petData.species || !petData.feed) {
+    if (!photo|| petData.name || !petData.age || !petData.weight || !petData.gender || !petData.species || !petData.feed) {
       console.log('모든 필드를 채워주세요.');
       console.log(petData)
       return;

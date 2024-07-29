@@ -87,6 +87,7 @@ const AddCard = () => {
     } catch (error) {
       console.error("There was an error adding the pet!", error);
     }
+    window.location.reload();
   };
 
   return (

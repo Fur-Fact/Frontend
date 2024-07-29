@@ -7,5 +7,11 @@ export interface PetData {
   species: string;
   weight: string;  // 모든 곳에서 number 타입으로 통일
   age: string;
-  feed: string;
+  feed: string;  
+}
+
+export interface InspectionData {
+  id: number;
+  resultDate: string;
+  comment: string;
 }

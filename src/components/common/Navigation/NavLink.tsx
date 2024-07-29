@@ -23,7 +23,7 @@ const NavLink = ({ to, defaultImg, focusImg, altText }:NavLinkProps) => {
   return (
     <Link
       to={to}
-      className="flex-1 flex justify-center"
+      className="flex-1 z-10 flex justify-center bg-white"
       onTouchStart={() => setHovered(true)}
       onTouchEnd={() => setHovered(false)}
       onMouseEnter={() => setHovered(true)}
