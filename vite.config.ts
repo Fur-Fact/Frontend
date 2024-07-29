@@ -12,6 +12,8 @@ export default defineConfig({
       devOptions:{
         enabled: true
       },
+      injectRegister: 'script',
+      //서비스 워커를 통한 서비스 워커 파일 설정
       manifest:{
         name: 'Fur-fact',
         short_name : 'Fur-fact',
