@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import Alarm_Filled from "../../assets/Alarm_Filled.png";
+// import Alarm_Filled from "../../assets/Alarm_Filled.png";
+import Alarm_Focus from '../../assets/Alarm_Focus.png'
 
 interface NotificationItemProps {
   petName: string;
@@ -12,10 +13,10 @@ function NotificationItem({ petName, iteration }: NotificationItemProps) {
   return (
     <div
       className='flex w-full justify-start items-center gap-3 py-4'
-      onClick={() => navigate("/result/1")}
+      onClick={() => navigate('/result/1')}
     >
       <div className='flex justify-center items-center w-7'>
-        <img src={Alarm_Filled} alt='' className='w-full' />
+        <img src={Alarm_Focus} alt='' className='w-6' />
       </div>
       <div className='flex flex-col w-full max-w-[305px] items-start justify-center'>
         <span className='w-full text-start text-black text-[13px] font-bold overflow-hidden whitespace-nowrap text-ellipsis'>

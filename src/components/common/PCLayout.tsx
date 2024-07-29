@@ -81,7 +81,7 @@ function PCLayout() {
         </div>
         <div className='flex flex-shrink flex-col flex-grow'>
           <div className='flex flex-row items-center justify-between px-5 pt-4 bg-white w-full h-28 rounded-tr-lg'>
-            <div className='text-lg font-medium'>
+            <div className='text-lg font-medium text-gray-900'>
               안녕하세요, 홍길동 수의사님!
             </div>
             {!location.pathname.includes('result') && (

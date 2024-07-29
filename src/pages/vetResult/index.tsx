@@ -96,17 +96,25 @@ export default function VetResult() {
   const [gender, seGender] = useState<string | null>(null);
   const [weight, setWeight] = useState<number | null>(null);
   const [contactNumber, setContactNumber] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     if (testId) {
       getChartData();
       getOtherLists();
+      handleClick();
     }
   }, [testId, contactNumber]);
 
   const { token } = useAuthStore();
 
+  const handleClick = () => {
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 3500);
+  };
 
   const getChartData = async () => {
     try {
@@ -115,9 +123,8 @@ export default function VetResult() {
         {
           headers: {
             Authorization: `Bearer ${token}`,
-          }
+          },
         }
-        
       );
 
       if (response.status === 200) {
@@ -180,8 +187,6 @@ export default function VetResult() {
     setComment(e.target.value);
   };
 
-  
-
   const postComment = async () => {
     try {
       const response = await axios.post(
@@ -200,7 +205,7 @@ export default function VetResult() {
       console.error('코멘트 등록 중 에러가 발생했습니다.', error);
     }
   };
-  
+
   const postPush = async () => {
     try {
       const response = await axios.post(
@@ -213,7 +218,6 @@ export default function VetResult() {
 
       if (response.status === 200) {
         console.log('전송 성공');
-        
       }
     } catch (error) {
       console.error('코멘트 등록 중 에러가 발생했습니다.', error);
@@ -242,68 +246,75 @@ export default function VetResult() {
             <span className='ml-2'>{weight}kg</span>
           </div>
         </div>
+        {isLoading ? (
+          <div className='relative flex flex-col w-full h-[350px] justify-center items-center rounded-md mt-8'>
+            <progress className='progress w-56'></progress>
+          </div>
+        ) : (
+          <>
+            <div className='relative flex flex-col w-full h-[400px] rounded-md mt-4 pt-16 pb-7 px-4 gap-6 overflow-x-auto'>
+              <div className='absolute top-0 left-0 w-[388px] h-full bg-[#efefef] z-0'>
+                <h2 className='text-center font-semibold text-black text-lg z-10 py-3 bg-[#e6dfdf]'>
+                  결핍
+                </h2>
+              </div>
+              <div className='absolute transform -translate-x-1/2 top-0 left-1/2 w-[389px] h-full bg-[#e5eaf6] z-0'>
+                <h2 className='text-center font-semibold text-black text-lg z-10 py-3 bg-[#d4def5]'>
+                  기준 범위
+                </h2>
+              </div>
+              <div className='absolute top-0 right-0 w-[399px] h-full bg-[#e8ece2] z-0'>
+                <h2 className='text-center font-semibold text-black text-lg z-10 py-3 bg-[#e2e9d2]'>
+                  과다
+                </h2>
+              </div>
 
-        <div className='relative flex flex-col w-full h-[400px] rounded-md mt-4 pt-16 pb-7 px-4 gap-6 overflow-x-auto'>
-          <div className='absolute top-0 left-0 w-[388px] h-full bg-[#efefef] z-0'>
-            <h2 className='text-center font-semibold text-black text-lg z-10 py-3 bg-[#e6dfdf]'>
-              결핍
-            </h2>
-          </div>
-          <div className='absolute transform -translate-x-1/2 top-0 left-1/2 w-[389px] h-full bg-[#e5eaf6] z-0'>
-            <h2 className='text-center font-semibold text-black text-lg z-10 py-3 bg-[#d4def5]'>
-              기준 범위
-            </h2>
-          </div>
-          <div className='absolute top-0 right-0 w-[399px] h-full bg-[#e8ece2] z-0'>
-            <h2 className='text-center font-semibold text-black text-lg z-10 py-3 bg-[#e2e9d2]'>
-              과다
-            </h2>
-          </div>
-
-          {/* 스크롤 가능한 영역 */}
-          <div className='relative flex flex-col w-full h-full overflow-y-auto'>
-            {furData &&
-              elements.map((element, index) => (
-                <ResultItem
-                  key={index}
-                  element={element.key}
-                  label={element.label}
-                  value={furData[element.key as keyof FurData] as number}
-                  color={element.color}
-                  distinction={distinction.filter(
-                    (d) => d.element === element.key
-                  )}
-                />
-              ))}
-          </div>
-        </div>
-
-        {/* 코멘트 입력 또는 표시 */}
-        <div className='flex flex-col mt-4 w-full h-1/6 '>
-          {savedComment === null ? (
-            <textarea
-              className='flex-grow border rounded-md p-4'
-              placeholder='코멘트를 입력하세요'
-              value={comment}
-              onChange={handleCommentChange}
-            ></textarea>
-          ) : (
-            <div className='flex-grow border rounded-md p-4 bg-blue-100'>
-              {savedComment}
+              {/* 스크롤 가능한 영역 */}
+              <div className='relative flex flex-col w-full h-full overflow-y-auto'>
+                {furData &&
+                  elements.map((element, index) => (
+                    <ResultItem
+                      key={index}
+                      element={element.key}
+                      label={element.label}
+                      value={furData[element.key as keyof FurData] as number}
+                      color={element.color}
+                      distinction={distinction.filter(
+                        (d) => d.element === element.key
+                      )}
+                    />
+                  ))}
+              </div>
             </div>
-          )}
-        </div>
 
-        {/* 입력 버튼 */}
-        {!savedComment && (
-          <div className='flex justify-end mt-1'>
-            <button
-              className='bg-blue-500 text-white px-4 py-2 rounded-md'
-              onClick={postComment}
-            >
-              코멘트 등록하기
-            </button>
-          </div>
+            {/* 코멘트 입력 또는 표시 */}
+            <div className='flex flex-col mt-4 w-full h-1/6 '>
+              {savedComment === null ? (
+                <textarea
+                  className='flex-grow border rounded-md p-4'
+                  placeholder='코멘트를 입력하세요'
+                  value={comment}
+                  onChange={handleCommentChange}
+                ></textarea>
+              ) : (
+                <div className='flex-grow border rounded-md p-4 bg-blue-100'>
+                  {savedComment}
+                </div>
+              )}
+            </div>
+
+            {/* 입력 버튼 */}
+            {!savedComment && (
+              <div className='flex justify-end mt-1'>
+                <button
+                  className='bg-blue-500 text-white px-4 py-2 rounded-md'
+                  onClick={postComment}
+                >
+                  코멘트 등록하기
+                </button>
+              </div>
+            )}
+          </>
         )}
       </div>
     </div>

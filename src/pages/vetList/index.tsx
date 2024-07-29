@@ -117,10 +117,10 @@ export default function Index() {
                 <td className='text-center px-6 py-2 whitespace-nowrap text-base text-gray-900'>
                   {index + 1}
                 </td>
-                <td className='text-center px-6 py-2 text-base'>
+                <td className='text-center px-6 py-2 text-base text-gray-900'>
                   {item.petName}
                 </td>
-                <td className='text-center px-6 py-2 whitespace-nowrap text-base'>
+                <td className='text-center px-6 py-2 whitespace-nowrap text-base text-gray-900'>
                   {item.age}
                 </td>
                 <td className='text-center px-6 py-2 whitespace-nowrap text-base text-gray-900'>
