@@ -4,6 +4,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import FullButton from '../../components/common/FullButton';
 import useAuthStore from '../../store/useAuthStore';
 import { baseInstance } from '../../api/config';
+import { registerServiceWorker } from '../../utils/notification';
+
 const Login = () => {
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
@@ -35,6 +37,7 @@ const Login = () => {
       if (response.status === 200) {
         alert('로그인 되었습니다!');
         setToken(response.data.access_token);
+        registerServiceWorker();
         navigate('/');
       }
     } catch (error: any) {
