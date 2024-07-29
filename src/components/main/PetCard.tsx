@@ -1,14 +1,19 @@
-import { useEffect, useState } from "react";
-import useModalStore from "../../store/useEditModeStore";
-import PetInfoCard from "./PetInfoCard";
-import PetInspectionCard from "./PetInspectionCard";
-import axios from "axios";
-import useAuthStore from "../../store/useAuthStore";
-import { InspectionData, PetData } from "../../types";
-import { useNavigate } from "react-router-dom";
-import Setting from "../../assets/setting.png"
+import { useEffect, useState } from 'react';
+import useModalStore from '../../store/useEditModeStore';
+import PetInfoCard from './PetInfoCard';
+import PetInspectionCard from './PetInspectionCard';
+import axios from 'axios';
+import useAuthStore from '../../store/useAuthStore';
+import { InspectionData, PetData } from '../../types';
+import { useNavigate } from 'react-router-dom';
 
-const PetCard = ({ data, HandleModal }: { data: PetData, HandleModal: (show: boolean) => void }) => {
+const PetCard = ({
+  data,
+  HandleModal,
+}: {
+  data: PetData;
+  HandleModal: (show: boolean) => void;
+}) => {
   const [age, setAge] = useState(data.age);
   const [weight, setWeight] = useState(data.weight);
   const [gender, setGender] = useState(data.gender);
@@ -66,8 +71,14 @@ const PetCard = ({ data, HandleModal }: { data: PetData, HandleModal: (show: boo
     }, 2000);
   }, [data]);
 
-
-  const [ inspectionData, setInspectionDatas] = useState([]);
+  // const inspectionData = [
+  //   {
+  //     id: 1,
+  //     petName: '두부',
+  //     age: '비비',
+  //   },
+  // ];
+  const [ inspectionDatas, setInspectionDatas ] = useState<InspectionData[]>([]);
 
   useEffect(() => {
     getInspectionData();
@@ -76,7 +87,7 @@ const PetCard = ({ data, HandleModal }: { data: PetData, HandleModal: (show: boo
   const getInspectionData = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:3000/api/v1/tests/vet/search?contactNumber=1035584676&petName=${name}`,
+        `http://localhost:3000/api/v1/tests/vet/search?&petName=${name}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -85,8 +96,7 @@ const PetCard = ({ data, HandleModal }: { data: PetData, HandleModal: (show: boo
 
       );
       if (response.status === 200) {
-        setInspectionDatas(response.data.tests);
-        console.log(response.data.tests);
+        setInspectionDatas(response.data.data);
       }
     } catch (error) {
       console.error('데이터 요청 중 에러가 발생했습니다.', error);
@@ -95,7 +105,7 @@ const PetCard = ({ data, HandleModal }: { data: PetData, HandleModal: (show: boo
   };
 
   return (
-    <div className="w-full  flex flex-col items-center">
+    <div className='w-full flex flex-col items-center'>
       <div
         className='relative flex flex-row w-[357px] h-[320px] bg-cover bg-center rounded-3xl m-2 p-2'
         style={{ backgroundImage: `url(${img})` }}
@@ -107,9 +117,7 @@ const PetCard = ({ data, HandleModal }: { data: PetData, HandleModal: (show: boo
           {isEdit ? (
             <button onClick={HandleSaveEditData}>저장</button>
           ) : (
-            <button className="m-1" onClick={() => HandleModal(true)}>
-              <img src={Setting}></img>
-            </button>
+            <button onClick={() => HandleModal(true)}>설정</button>
           )}
         </div>
       </div>
@@ -128,21 +136,12 @@ const PetCard = ({ data, HandleModal }: { data: PetData, HandleModal: (show: boo
             <div className='skeleton bg-gray_400 w-[357px] h-[70px] m-2 '></div>
           </>
         ) : (
-          <>
-            {inspectionData.map((inspection) => (
-              <PetInspectionCard
-                key={inspection.id}
-                number={inspection.id}
-                onClick={() => navigate('/result/1')}
-              />
+          <div className="h-[480px] overflow-scroll">
+            {inspectionDatas.map((inspection, index) => (
+              <PetInspectionCard key={inspection.id} date={inspection.resultDate} comment={inspection.comment} number={index+1} onClick={()=>navigate(`/result/${inspection.id}`)}  />
             ))}
-          </>
+          </div>
         )}
-      </div>
-      <div className="h-[480px] overflow-scroll">
-        {inspectionData.map((inspection:InspectionData, index) => (
-          <PetInspectionCard key={inspection.id} date={inspection.resultDate} comment={inspection.comment} number={index+1} onClick={()=>navigate(`/result/${inspection.id}`)}  />
-        ))}
       </div>
     </div>
   );

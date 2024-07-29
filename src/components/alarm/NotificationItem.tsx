@@ -16,7 +16,7 @@ function NotificationItem({ petName, iteration }: NotificationItemProps) {
       onClick={() => navigate('/result/1')}
     >
       <div className='flex justify-center items-center w-7'>
-        <img src={Alarm_Filled} alt='' className='w-3/4' />
+        <img src={Alarm_Focus} alt='' className='w-6' />
       </div>
       <div className='flex flex-col w-full max-w-[305px] items-start justify-center'>
         <span className='w-full text-start text-black text-[13px] font-bold overflow-hidden whitespace-nowrap text-ellipsis'>
