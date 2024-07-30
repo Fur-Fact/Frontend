@@ -84,7 +84,7 @@ const EmblaCarousel: React.FC<PropType> = ({ slides, options, HandleModal, setSe
     }
 
     try {
-      const response = await axios.put(`http://localhost:3000/api/v1/pets/${selectedIndex}`, formData, {
+      const response = await axios.put(`${process.env.REACT_APP_API_BASE_URL}api/v1/pets/${selectedIndex}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
           'Authorization': `Bearer ${token}`,

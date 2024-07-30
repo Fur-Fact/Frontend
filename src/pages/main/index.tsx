@@ -28,7 +28,7 @@ const MainPage = () => {
 
   const getPetData = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/api/v1/pets/list', {
+      const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}api/v1/pets/list`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -44,7 +44,7 @@ const MainPage = () => {
 
   const deletePetData = async (id: number) => {
     try {
-      const response = await axios.delete(`http://localhost:3000/api/v1/pets/${id}`, {
+      const response = await axios.delete(`${process.env.REACT_APP_API_BASE_URL}api/v1/pets/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
