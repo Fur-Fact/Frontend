@@ -146,7 +146,7 @@ function ResultMobilePage() {
   const fetchTestResult = async () => {
     try {
       const response = await axios.get<fetchTestResultResponseData>(
-        `http://localhost:3000/api/v1/tests/${id}`,
+        `${process.env.REACT_APP_API_BASE_URL}api/v1/tests/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

@@ -119,7 +119,7 @@ export default function VetResult() {
   const getChartData = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:3000/api/v1/tests/${testId}`,
+        `${process.env.REACT_APP_API_BASE_URL}api/v1/tests/${testId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -146,7 +146,7 @@ export default function VetResult() {
     try {
       if (contactNumber && petName) {
         const response = await axios.get(
-          `http://localhost:3000/api/v1/tests/vet/search?contactNumber=${contactNumber}&petName=${petName}`
+          `${process.env.REACT_APP_API_BASE_URL}api/v1/tests/vet/search?contactNumber=${contactNumber}&petName=${petName}`
         );
 
         if (response.status === 200) {
@@ -190,7 +190,7 @@ export default function VetResult() {
   const postComment = async () => {
     try {
       const response = await axios.post(
-        'http://localhost:3000/api/v1/tests/comment',
+        `${process.env.REACT_APP_API_BASE_URL}api/v1/tests/comment`,
         {
           test_id: testId,
           comment: comment,
@@ -209,7 +209,7 @@ export default function VetResult() {
   const postPush = async () => {
     try {
       const response = await axios.post(
-        'http://localhost:3000/api/v1/tests/push',
+        `${process.env.REACT_APP_API_BASE_URL}api/v1/tests/push`,
         {
           test_id: testId,
           phone: contactNumber,

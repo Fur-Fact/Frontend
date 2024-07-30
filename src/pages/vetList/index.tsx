@@ -29,7 +29,7 @@ export default function Index() {
     // const token = sessionStorage.getItem('token');
     try {
       const response = await axios.get(
-        `http://localhost:3000/api/v1/tests?page=${page}&limit=10`
+        `${process.env.REACT_APP_API_BASE_URL}api/v1/tests?page=${page}&limit=10`
         // {
         //   headers: {
         //     Authorization: `Bearer ${token}`,

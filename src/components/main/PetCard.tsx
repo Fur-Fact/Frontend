@@ -33,7 +33,7 @@ const PetCard = ({
   const putPetData = async () => {
     try {
       const response = await axios.put(
-        `http://localhost:3000/api/v1/pets/${data.id}`,
+        `${process.env.REACT_APP_API_BASE_URL}/api/v1/pets/${data.id}`,
         {
           name,
           age,
@@ -87,7 +87,7 @@ const PetCard = ({
   const getInspectionData = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:3000/api/v1/tests/vet/search?&petName=${name}`,
+        `${process.env.REACT_APP_API_BASE_URL}api/v1/tests/vet/search?&petName=${name}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

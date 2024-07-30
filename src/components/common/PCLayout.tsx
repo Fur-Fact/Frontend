@@ -36,7 +36,7 @@ function PCLayout() {
 
     try {
       const response = await axios.post(
-        'http://localhost:3000/api/v1/furdatas',
+        `${process.env.REACT_APP_API_BASE_URL}api/v1/furdatas`,
         formData,
         {
           headers: {
