@@ -1,10 +1,9 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import SelectBox from '../../components/selectBox';
 import ResultItem from '../../components/result/ResultItem';
 import useAuthStore from '../../store/useAuthStore';
-
+import { baseInstance } from '../../api/config';
 interface Option {
   id: number;
   label: string;
@@ -118,14 +117,11 @@ export default function VetResult() {
 
   const getChartData = async () => {
     try {
-      const response = await axios.get(
-        `${process.env.REACT_APP_API_BASE_URL}api/v1/tests/${testId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await baseInstance.get(`tests/${testId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       if (response.status === 200) {
         setSavedComment(response.data.data.comment);
@@ -145,8 +141,8 @@ export default function VetResult() {
   const getOtherLists = async () => {
     try {
       if (contactNumber && petName) {
-        const response = await axios.get(
-          `${process.env.REACT_APP_API_BASE_URL}api/v1/tests/vet/search?contactNumber=${contactNumber}&petName=${petName}`
+        const response = await baseInstance.get(
+          `vet/search?contactNumber=${contactNumber}&petName=${petName}`
         );
 
         if (response.status === 200) {
@@ -189,13 +185,10 @@ export default function VetResult() {
 
   const postComment = async () => {
     try {
-      const response = await axios.post(
-        `${process.env.REACT_APP_API_BASE_URL}api/v1/tests/comment`,
-        {
-          test_id: testId,
-          comment: comment,
-        }
-      );
+      const response = await baseInstance.post(`tests/comment`, {
+        test_id: testId,
+        comment: comment,
+      });
 
       if (response.status === 200) {
         setSavedComment(comment);
@@ -208,13 +201,10 @@ export default function VetResult() {
 
   const postPush = async () => {
     try {
-      const response = await axios.post(
-        `${process.env.REACT_APP_API_BASE_URL}api/v1/tests/push`,
-        {
-          test_id: testId,
-          phone: contactNumber,
-        }
-      );
+      const response = await baseInstance.post(`tests/push`, {
+        test_id: testId,
+        phone: contactNumber,
+      });
 
       if (response.status === 200) {
         console.log('전송 성공');

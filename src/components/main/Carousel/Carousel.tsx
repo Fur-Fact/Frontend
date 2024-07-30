@@ -10,8 +10,7 @@ import AddInput from '../../common/AddInput';
 import FullButton from '../../common/FullButton';
 import useAuthStore from '../../../store/useAuthStore';
 import useModalStore from '../../../store/useEditModeStore';
-import axios from 'axios';
-
+import { baseInstance } from '../../../api/config';
 type PropType = {
   slides: PetData[];
   options?: EmblaOptionsType;
@@ -19,9 +18,18 @@ type PropType = {
   setSelected: (value: number) => void;
 };
 
-const EmblaCarousel: React.FC<PropType> = ({ slides, options, HandleModal, setSelected }) => {
-  const [emblaRef, emblaApi] = useEmblaCarousel({ align: 'center', ...options });
-  const { selectedIndex, scrollSnaps, onDotButtonClick } = useDotButton(emblaApi);
+const EmblaCarousel: React.FC<PropType> = ({
+  slides,
+  options,
+  HandleModal,
+  setSelected,
+}) => {
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    align: 'center',
+    ...options,
+  });
+  const { selectedIndex, scrollSnaps, onDotButtonClick } =
+    useDotButton(emblaApi);
 
   useEffect(() => {
     setSelected(selectedIndex);
@@ -64,9 +72,17 @@ const EmblaCarousel: React.FC<PropType> = ({ slides, options, HandleModal, setSe
   };
 
   const handleSubmit = async () => {
-    if (!photo|| petData.name || !petData.age || !petData.weight || !petData.gender || !petData.species || !petData.feed) {
+    if (
+      !photo ||
+      petData.name ||
+      !petData.age ||
+      !petData.weight ||
+      !petData.gender ||
+      !petData.species ||
+      !petData.feed
+    ) {
       console.log('모든 필드를 채워주세요.');
-      console.log(petData)
+      console.log(petData);
       return;
     }
 
@@ -79,17 +95,21 @@ const EmblaCarousel: React.FC<PropType> = ({ slides, options, HandleModal, setSe
     formData.append('species', petData.species);
     formData.append('feed', petData.feed);
 
-    for (let pair of formData.entries()) {
+    for (const pair of formData.entries()) {
       console.log(pair[0] + ': ' + pair[1]);
     }
 
     try {
-      const response = await axios.put(`${process.env.REACT_APP_API_BASE_URL}api/v1/pets/${selectedIndex}`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          'Authorization': `Bearer ${token}`,
-        },
-      });
+      const response = await baseInstance.put(
+        `/pets/${selectedIndex}`,
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       if (response.status === 200) {
         console.log('Pet added successfully');
         setPetData({
@@ -134,71 +154,85 @@ const EmblaCarousel: React.FC<PropType> = ({ slides, options, HandleModal, setSe
   }, [isModalOpen]);
 
   return (
-    <section className="embla">
-      <div className="embla__viewport" ref={emblaRef}>
-        <div className="embla__container">
+    <section className='embla'>
+      <div className='embla__viewport' ref={emblaRef}>
+        <div className='embla__container'>
           {slides.map((data, index) => (
-            <div className="embla__slide" key={index}>
+            <div className='embla__slide' key={index}>
               <PetCard data={data} HandleModal={HandleModal} />
             </div>
           ))}
-          <div className="embla__slide">
+          <div className='embla__slide'>
             <AddCard />
           </div>
         </div>
       </div>
-      <div className="embla__controls">
-        <div className="embla__dots">
+      <div className='embla__controls'>
+        <div className='embla__dots'>
           {scrollSnaps.map((_, index) => (
             <DotButton
               key={index}
               onClick={() => onDotButtonClick(index)}
-              className={'embla__dot'.concat(index === selectedIndex ? ' embla__dot--selected' : '')}
+              className={'embla__dot'.concat(
+                index === selectedIndex ? ' embla__dot--selected' : ''
+              )}
             />
           ))}
         </div>
       </div>
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-        <div className="py-8">
-          <div className="w-full h-[320px] flex flex-col items-center justify-center">
-            <input id="photo-input" type="file" onChange={handlePhotoChange} className="hidden" />
+        <div className='py-8'>
+          <div className='w-full h-[320px] flex flex-col items-center justify-center'>
+            <input
+              id='photo-input'
+              type='file'
+              onChange={handlePhotoChange}
+              className='hidden'
+            />
             {photoPreview === null ? (
               <div
                 onClick={triggerFileInput}
-                className="mt-2 w-64 h-64 bg-slate-400 object-cover rounded-full cursor-pointer"
+                className='mt-2 w-64 h-64 bg-slate-400 object-cover rounded-full cursor-pointer'
               ></div>
             ) : (
               <img
                 src={photoPreview}
                 onClick={triggerFileInput}
                 alt={photoPreview}
-                className="mt-2 w-64 h-64 object-cover rounded-full cursor-pointer"
+                className='mt-2 w-64 h-64 object-cover rounded-full cursor-pointer'
               />
             )}
           </div>
-          <AddInput placeholder="동물 이름" name="name" value={petData.name} onChange={handleInputChange} />
-          <div className="flex">
+          <AddInput
+            placeholder='동물 이름'
+            name='name'
+            value={petData.name}
+            onChange={handleInputChange}
+          />
+          <div className='flex'>
             <input
-              className="mr-1 text-xs px-4 h-14 my-1 border-2 rounded-xl border-solid border-[#E5E4E3]"
-              placeholder="나이"
-              type="text"
-              name="age"
+              className='mr-1 text-xs px-4 h-14 my-1 border-2 rounded-xl border-solid border-[#E5E4E3]'
+              placeholder='나이'
+              type='text'
+              name='age'
               value={petData.age}
               onChange={handleInputChange}
             />
             <input
-              className="ml-1 text-xs px-4 h-14 my-1 border-2 rounded-xl border-solid border-[#E5E4E3]"
-              placeholder="몸무게"
-              type="text"
-              name="weight"
+              className='ml-1 text-xs px-4 h-14 my-1 border-2 rounded-xl border-solid border-[#E5E4E3]'
+              placeholder='몸무게'
+              type='text'
+              name='weight'
               value={petData.weight}
               onChange={handleInputChange}
             />
           </div>
-          <div className="flex">
+          <div className='flex'>
             <div
               className={`w-[164px] mr-1 flex flex-row justify-center items-center text-xs px-4 h-14 my-1 border-2 rounded-xl border-solid cursor-pointer ${
-                petData.gender === 'male' ? 'bg-primary text-white' : 'border-[#E5E4E3]'
+                petData.gender === 'male'
+                  ? 'bg-primary text-white'
+                  : 'border-[#E5E4E3]'
               }`}
               onClick={() => setPetData({ ...petData, gender: 'male' })}
             >
@@ -206,15 +240,27 @@ const EmblaCarousel: React.FC<PropType> = ({ slides, options, HandleModal, setSe
             </div>
             <div
               className={`w-[164px] ml-1 flex flex-row justify-center items-center text-xs px-4 h-14 my-1 border-2 rounded-xl border-solid cursor-pointer ${
-                petData.gender === 'female' ? 'bg-primary text-white' : 'border-[#E5E4E3]'
+                petData.gender === 'female'
+                  ? 'bg-primary text-white'
+                  : 'border-[#E5E4E3]'
               }`}
               onClick={() => setPetData({ ...petData, gender: 'female' })}
             >
               여성
             </div>
           </div>
-          <AddInput placeholder="종" name="species" value={petData.species} onChange={handleInputChange} />
-          <AddInput placeholder="먹이 정보" name="feed" value={petData.feed} onChange={handleInputChange} />
+          <AddInput
+            placeholder='종'
+            name='species'
+            value={petData.species}
+            onChange={handleInputChange}
+          />
+          <AddInput
+            placeholder='먹이 정보'
+            name='feed'
+            value={petData.feed}
+            onChange={handleInputChange}
+          />
           <FullButton disabled={false} onClick={handleSubmit}>
             수정하기
           </FullButton>

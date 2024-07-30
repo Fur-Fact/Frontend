@@ -1,10 +1,9 @@
-import axios from "axios";
-import Navigation from "../../../components/common/Navigation/Navigation";
-import ResultItem from "../../../components/result/ResultItem";
-import { useEffect, useState } from "react";
-import useAuthStore from "../../../store/useAuthStore";
-import { useParams } from "react-router-dom";
-
+import Navigation from '../../../components/common/Navigation/Navigation';
+import ResultItem from '../../../components/result/ResultItem';
+import { useEffect, useState } from 'react';
+import useAuthStore from '../../../store/useAuthStore';
+import { useParams } from 'react-router-dom';
+import { baseInstance } from '../../../api/config';
 interface FurData {
   id: number;
   testId: number;
@@ -139,14 +138,14 @@ function ResultMobilePage() {
   const { token } = useAuthStore();
   const { id } = useParams<{ id: string }>();
 
-  const [resultDate, setResultDate] = useState<string>("");
+  const [resultDate, setResultDate] = useState<string>('');
   const [furData, setFurData] = useState<FurData | null>(null);
   const [comment, setComment] = useState<string | null>(null);
 
   const fetchTestResult = async () => {
     try {
-      const response = await axios.get<fetchTestResultResponseData>(
-        `${process.env.REACT_APP_API_BASE_URL}api/v1/tests/${id}`,
+      const response = await baseInstance.get<fetchTestResultResponseData>(
+        `tests/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -211,24 +210,30 @@ function ResultMobilePage() {
           </div>
         </div>
         <div className='flex flex-col w-full items-center justify-start  h-20 border border-solid border-primary rounded-xl '>
-          <div className="flex w-full mt-2 px-3 gap-1">
+          <div className='flex w-full mt-2 px-3 gap-1'>
             <span className='text-black text-sm'>위험 요소 :</span>
-            <span className='text-black text-sm'>칼슘, 마그네슘, 아연, 셀레늄, 크롬, 바나듐</span>
+            <span className='text-black text-sm'>
+              칼슘, 마그네슘, 아연, 셀레늄, 크롬, 바나듐
+            </span>
           </div>
-          <div className="flex w-full px-3 gap-1 ">
-            <span className='text-black text-sm whitespace-nowrap'>수의사 코멘트 :</span>
-            <span className='text-black text-sm'>전체적으로 건강하고 잘 크고 있습니다 다만, 사료에서 칼슘만 조금 더 보충해주세요</span>
+          <div className='flex w-full px-3 gap-1 '>
+            <span className='text-black text-sm whitespace-nowrap'>
+              수의사 코멘트 :
+            </span>
+            <span className='text-black text-sm'>
+              전체적으로 건강하고 잘 크고 있습니다 다만, 사료에서 칼슘만 조금 더
+              보충해주세요
+            </span>
           </div>
-
         </div>
-        {
-          comment ? 
+        {comment ? (
           <div className='flex w-full items-center justify-start gap-1 h-12 border border-solid border-primary rounded-xl mt-5 px-3'>
-            <span className='text-black text-sm whitespace-nowrap'>수의사 코멘트 :</span>
+            <span className='text-black text-sm whitespace-nowrap'>
+              수의사 코멘트 :
+            </span>
             <span className='text-black text-sm'>{comment}</span>
           </div>
-          : null
-        }
+        ) : null}
         {/* {comment ? (
             <div className='text-black text-sm'></div>
           ) : (

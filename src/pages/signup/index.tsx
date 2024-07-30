@@ -2,8 +2,7 @@ import { useState, ChangeEvent } from 'react';
 import Input from '../../components/common/Input';
 import { Link, useNavigate } from 'react-router-dom';
 import FullButton from '../../components/common/FullButton';
-import axios, { AxiosError } from 'axios';
-
+import { baseInstance } from '../../api/config';
 const SignUp = () => {
   const [name, setName] = useState('');
   const [id, setId] = useState('');
@@ -34,7 +33,7 @@ const SignUp = () => {
   const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setPassword(value);
-    setIsPasswordValid(value.length >= 6); 
+    setIsPasswordValid(value.length >= 6);
     setIsConfirmPasswordValid(value === confirmPassword);
   };
 
@@ -52,7 +51,7 @@ const SignUp = () => {
 
   const handleSignUp = async () => {
     try {
-      const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}api/v1/users/signup`, {
+      const response = await baseInstance.post(`users/signup`, {
         name: name,
         email: id,
         password: password,
@@ -63,63 +62,71 @@ const SignUp = () => {
         alert('회원가입 성공');
         navigate('/login');
       }
-    } catch (error) {
-      const axiosError = error as AxiosError;
-      if (axiosError.response && axiosError.response.status === 400) {
+    } catch (error: any) {
+      if (error.response && error.response.status === 400) {
         alert('중복된 이메일 또는 필드 누락');
       } else {
         alert('error');
-        console.log(axiosError);
+        console.log(error);
       }
     }
   };
 
-  const isFormValid = isNameValid && isIdValid && isPasswordValid && isConfirmPasswordValid && isPhoneValid;
+  const isFormValid =
+    isNameValid &&
+    isIdValid &&
+    isPasswordValid &&
+    isConfirmPasswordValid &&
+    isPhoneValid;
 
   return (
-    <section className="flex flex-col h-full justify-center bg-[#FEFEFE]">
-      <div className="flex flex-col h-full font-bold justify-between items-start m-8 mt-16">
-        <div className="flex flex-col items-start">
-          <h1 className="text-5xl font-sans">
-            회원가입
-          </h1>
+    <section className='flex flex-col h-full justify-center bg-[#FEFEFE]'>
+      <div className='flex flex-col h-full font-bold justify-between items-start m-8 mt-16'>
+        <div className='flex flex-col items-start'>
+          <h1 className='text-5xl font-sans'>회원가입</h1>
         </div>
         <div>
           <Input
-            label="이름"
-            placeholder="이름"
+            label='이름'
+            placeholder='이름'
             value={name}
             onChange={handleNameChange}
           />
           <Input
-            label="휴대폰 번호"
-            placeholder="휴대폰 번호"
+            label='휴대폰 번호'
+            placeholder='휴대폰 번호'
             value={phone}
             onChange={handlePhoneChange}
           />
           <Input
-            label="아이디"
-            placeholder="아이디"
+            label='아이디'
+            placeholder='아이디'
             value={id}
             onChange={handleIdChange}
           />
           <Input
-            label="비밀번호"
-            type="password"
-            placeholder="비밀번호"
+            label='비밀번호'
+            type='password'
+            placeholder='비밀번호'
             value={password}
             onChange={handlePasswordChange}
           />
           <Input
-            label="비밀번호 확인"
-            type="password"
-            placeholder="비밀번호 확인"
+            label='비밀번호 확인'
+            type='password'
+            placeholder='비밀번호 확인'
             value={confirmPassword}
             onChange={handleConfirmPasswordChange}
           />
-          <div className="w-full flex flex-row justify-center">
-            <div className="flex flex-row text-xs justify-center">
-              계정이 있으신가요? <Link className='text-primary font-bold hover:text-blue-500' to="/login">로그인</Link>
+          <div className='w-full flex flex-row justify-center'>
+            <div className='flex flex-row text-xs justify-center'>
+              계정이 있으신가요?{' '}
+              <Link
+                className='text-primary font-bold hover:text-blue-500'
+                to='/login'
+              >
+                로그인
+              </Link>
             </div>
           </div>
         </div>

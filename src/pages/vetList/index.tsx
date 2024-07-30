@@ -1,7 +1,6 @@
-import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import { baseInstance } from '../../api/config';
 interface Item {
   id: string;
   petName: string;
@@ -28,8 +27,8 @@ export default function Index() {
   const getList = async (page: number) => {
     // const token = sessionStorage.getItem('token');
     try {
-      const response = await axios.get(
-        `${process.env.REACT_APP_API_BASE_URL}api/v1/tests?page=${page}&limit=10`
+      const response = await baseInstance.get(
+        `tests?page=${page}&limit=10`
         // {
         //   headers: {
         //     Authorization: `Bearer ${token}`,

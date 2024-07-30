@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react';
 import useModalStore from '../../store/useEditModeStore';
 import PetInfoCard from './PetInfoCard';
 import PetInspectionCard from './PetInspectionCard';
-import axios from 'axios';
 import useAuthStore from '../../store/useAuthStore';
 import { InspectionData, PetData } from '../../types';
 import { useNavigate } from 'react-router-dom';
+import { baseInstance } from '../../api/config';
 
 const PetCard = ({
   data,
@@ -32,8 +32,8 @@ const PetCard = ({
 
   const putPetData = async () => {
     try {
-      const response = await axios.put(
-        `${process.env.REACT_APP_API_BASE_URL}/api/v1/pets/${data.id}`,
+      const response = await baseInstance.put(
+        `pets/${data.id}`,
         {
           name,
           age,
@@ -78,7 +78,7 @@ const PetCard = ({
   //     age: '비비',
   //   },
   // ];
-  const [ inspectionDatas, setInspectionDatas ] = useState<InspectionData[]>([]);
+  const [inspectionDatas, setInspectionDatas] = useState<InspectionData[]>([]);
 
   useEffect(() => {
     getInspectionData();
@@ -86,21 +86,20 @@ const PetCard = ({
 
   const getInspectionData = async () => {
     try {
-      const response = await axios.get(
-        `${process.env.REACT_APP_API_BASE_URL}api/v1/tests/vet/search?&petName=${name}`,
+      const response = await baseInstance.get(
+        `tests/vet/search?&petName=${name}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
-          }
+          },
         }
-
       );
       if (response.status === 200) {
         setInspectionDatas(response.data.data);
       }
     } catch (error) {
       console.error('데이터 요청 중 에러가 발생했습니다.', error);
-      console.log(name)
+      console.log(name);
     }
   };
 
@@ -136,9 +135,15 @@ const PetCard = ({
             <div className='skeleton bg-gray_400 w-[357px] h-[70px] m-2 '></div>
           </>
         ) : (
-          <div className="h-[480px] overflow-scroll">
+          <div className='h-[480px] overflow-scroll'>
             {inspectionDatas.map((inspection, index) => (
-              <PetInspectionCard key={inspection.id} date={inspection.resultDate} comment={inspection.comment} number={index+1} onClick={()=>navigate(`/result/${inspection.id}`)}  />
+              <PetInspectionCard
+                key={inspection.id}
+                date={inspection.resultDate}
+                comment={inspection.comment}
+                number={index + 1}
+                onClick={() => navigate(`/result/${inspection.id}`)}
+              />
             ))}
           </div>
         )}

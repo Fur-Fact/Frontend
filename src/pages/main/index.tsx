@@ -2,11 +2,10 @@ import { useEffect, useState } from 'react';
 import Carousel from '../../components/main/Carousel/Carousel';
 import Modal from '../../components/main/Modal';
 import useModalStore from '../../store/useEditModeStore';
-import axios from 'axios';
 import useAuthStore from '../../store/useAuthStore';
 import { PetData } from '../../types';
 import { useNavigate } from 'react-router-dom';
-
+import { baseInstance } from '../../api/config';
 
 const MainPage = () => {
   const navigate = useNavigate();
@@ -28,7 +27,7 @@ const MainPage = () => {
 
   const getPetData = async () => {
     try {
-      const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}api/v1/pets/list`, {
+      const response = await baseInstance.get(`pets/list`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -44,13 +43,13 @@ const MainPage = () => {
 
   const deletePetData = async (id: number) => {
     try {
-      const response = await axios.delete(`${process.env.REACT_APP_API_BASE_URL}api/v1/pets/${id}`, {
+      const response = await baseInstance.delete(`pets/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
       if (response.status === 200) {
-        setPets(pets.filter(pet => pet.id !== id));
+        setPets(pets.filter((pet) => pet.id !== id));
         setIsModalOpen(false);
       }
     } catch (error) {
@@ -84,10 +83,14 @@ const MainPage = () => {
   };
 
   return (
-    <section className="flex flex-col justify-center bg-[#FEFEFE]">
-      <Carousel slides={pets} HandleModal={handleModalOpen} setSelected={setSelected} />
+    <section className='flex flex-col justify-center bg-[#FEFEFE]'>
+      <Carousel
+        slides={pets}
+        HandleModal={handleModalOpen}
+        setSelected={setSelected}
+      />
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-        <div className="flex flex-col justify-center items-center">
+        <div className='flex flex-col justify-center items-center'>
           {chooseDelete ? (
             <>
               <div>{selectedPet}번 펫 삭제하시겠습니까?</div>
@@ -96,16 +99,14 @@ const MainPage = () => {
             </>
           ) : (
             <>
-              <h2 className="item text-xl mb-4">설정</h2>
-              <div className="flex flex-row">
+              <h2 className='item text-xl mb-4'>설정</h2>
+              <div className='flex flex-row'>
                 <div onClick={handleEdit}>수정</div>/
                 <div onClick={handleDelete}>삭제</div>
               </div>
             </>
           )}
-          {
-            
-          }
+          {}
         </div>
       </Modal>
     </section>

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import logo from '../../assets/logo.png';
+import { baseInstance } from '../../api/config';
 
 function PCLayout() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -35,16 +35,12 @@ function PCLayout() {
     formData.append('file', selectedFile);
 
     try {
-      const response = await axios.post(
-        `${process.env.REACT_APP_API_BASE_URL}api/v1/furdatas`,
-        formData,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await baseInstance.post(`furdatas`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       if (response.status === 200) {
         alert('파일이 성공적으로 업로드되었습니다.');
