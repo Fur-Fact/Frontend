@@ -1,6 +1,8 @@
 // src/firebase.js
 import { initializeApp } from 'firebase/app';
-import { getMessaging } from 'firebase/messaging';
+import { getMessaging, getToken } from 'firebase/messaging';
+import { baseInstance } from '../../api/config';
+
 
 const firebaseConfig = {
     apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -15,3 +17,27 @@ const firebaseConfig = {
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);
 export const messaging = getMessaging(app);
+Notification.requestPermission()
+
+const messaging = getMessaging();
+
+export const getFCMToken = async () => {
+    try {
+        const currentToken = await getToken(messaging, { vapidKey: import.meta.env.VITE_PUBLIC_VAPID_KEY });
+        if (currentToken) {
+            try {
+                const response = await baseInstance.post('/users/updateToken', {
+                    fcmToken: currentToken
+                });
+                console.log('토큰 전달:', response.data);
+            } catch (error) {
+                console.error(error);
+            }
+        } else {
+            console.log('토큰을 받아오지 못했습니다!');
+        }
+    } catch (error) {
+        console.error(error);
+    }
+};
+
