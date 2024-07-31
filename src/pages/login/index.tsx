@@ -40,19 +40,20 @@ const Login = () => {
         email: id,
         password: password,
       });
+      alert(response)
       console.log(response);
       if (response.status === 200) {
         alert('로그인 되었습니다!');
         setToken(response.data.access_token);
         registerServiceWorker();
         requestNotificationPermission();
-
       }
     } catch (error: any) {
       if (error.response && error.response.status === 400) {
         alert('잘못된 이메일 또는 비밀번호');
       } else {
-        alert('서버 오류');
+        console.error(error);
+        alert(error.message);
       }
     }
   };
