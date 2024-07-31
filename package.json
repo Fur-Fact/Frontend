@@ -11,6 +11,7 @@
     "host": "vite --host"
   },
   "dependencies": {
+    "@types/firebase": "^3.2.1",
     "@types/react-slick": "^0.23.13",
     "axios": "^1.7.2",
     "chart.js": "^4.4.3",
