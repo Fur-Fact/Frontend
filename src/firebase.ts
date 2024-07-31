@@ -23,7 +23,6 @@ const messagingInstance: Messaging = getMessaging();
 
 export const getFCMToken = async (): Promise<void> => {
     try {
-        
         const currentToken = await getToken(messagingInstance, { vapidKey: import.meta.env.VITE_PUBLIC_VAPID_KEY as string });
         if (currentToken) {
             try {
@@ -34,11 +33,12 @@ export const getFCMToken = async (): Promise<void> => {
                 alert('토큰 전달');
             } catch (error) {
                 console.error(error);
+                alert('토큰 전달');
             }
         } else {
-            console.log('토큰을 받아오지 못했습니다!');
+            alert('토큰을 받아오지 못했습니다!');
         }
     } catch (error) {
-        console.error(error);
+        alert(error)
     }
 };

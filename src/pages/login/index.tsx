@@ -63,7 +63,7 @@ const Login = () => {
       const permission = await Notification.requestPermission();
       if (permission !== "granted") {
         console.log('Notification permission denied');
-        // 푸시 거부됐을 때 처리할 내용
+        alert("토큰 거부")
       } else {
         console.log('Notification permission granted');
         getFCMToken();
