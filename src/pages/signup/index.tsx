@@ -14,7 +14,6 @@ const SignUp = () => {
   const [isIdValid, setIsIdValid] = useState(false);
   const [isPasswordValid, setIsPasswordValid] = useState(false);
   const [isConfirmPasswordValid, setIsConfirmPasswordValid] = useState(false);
-  const [isPhoneValid, setIsPhoneValid] = useState(false);
 
   const navigate = useNavigate();
 
@@ -46,7 +45,6 @@ const SignUp = () => {
   const handlePhoneChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setPhone(value);
-    setIsPhoneValid(/^\d{10,11}$/.test(value));
   };
 
   const handleSignUp = async () => {
@@ -77,8 +75,7 @@ const SignUp = () => {
     isNameValid &&
     isIdValid &&
     isPasswordValid &&
-    isConfirmPasswordValid &&
-    isPhoneValid;
+    isConfirmPasswordValid 
 
   return (
     <section className='flex flex-col h-full justify-center bg-[#FEFEFE]'>
