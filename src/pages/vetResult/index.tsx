@@ -213,7 +213,7 @@ export default function VetResult() {
       }
       console.log(response)
     } catch (error) {
-      console.error('코멘트 등록 중 에러가 발생했습니다.', error);
+      console.error(error);
     }
   };
   return (
