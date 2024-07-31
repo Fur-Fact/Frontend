@@ -1,9 +1,12 @@
-import { useState, ChangeEvent } from 'react';
+import { useState, ChangeEvent, useEffect } from 'react';
 import Input from '../../components/common/Input';
 import { Link, useNavigate } from 'react-router-dom';
 import FullButton from '../../components/common/FullButton';
 import useAuthStore from '../../store/useAuthStore';
 import { baseInstance } from '../../api/config';
+import { registerServiceWorker } from '../../utils/notification';
+import { getFCMToken } from '../../firebase';
+
 const Login = () => {
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
@@ -11,7 +14,13 @@ const Login = () => {
   const [isPasswordValid, setIsPasswordValid] = useState(false);
 
   const navigate = useNavigate();
-  const { setToken } = useAuthStore();
+  const { setToken,token } = useAuthStore();
+
+  useEffect(() => {
+    if (token) {
+      navigate('/');
+    }
+  }, []);
 
   const handleIdChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -35,7 +44,9 @@ const Login = () => {
       if (response.status === 200) {
         alert('로그인 되었습니다!');
         setToken(response.data.access_token);
-        navigate('/');
+        registerServiceWorker();
+        requestNotificationPermission();
+
       }
     } catch (error: any) {
       if (error.response && error.response.status === 400) {
@@ -43,6 +54,21 @@ const Login = () => {
       } else {
         alert('서버 오류');
       }
+    }
+  };
+
+  const requestNotificationPermission = async () => {
+    try {
+      const permission = await Notification.requestPermission();
+      if (permission !== "granted") {
+        console.log('Notification permission denied');
+        // 푸시 거부됐을 때 처리할 내용
+      } else {
+        console.log('Notification permission granted');
+        getFCMToken();
+      }
+    } catch (error) {
+      console.error('Error requesting notification permission:', error);
     }
   };
 

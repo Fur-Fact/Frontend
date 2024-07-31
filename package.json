@@ -11,12 +11,14 @@
     "host": "vite --host"
   },
   "dependencies": {
+    "@types/firebase": "^3.2.1",
     "@types/react-slick": "^0.23.13",
     "axios": "^1.7.2",
     "chart.js": "^4.4.3",
     "chartjs-plugin-annotation": "^3.0.1",
     "dotenv": "^16.4.5",
     "embla-carousel-react": "^8.1.6",
+    "firebase": "^10.12.4",
     "framer-motion": "^11.3.17",
     "react": "^18.3.1",
     "react-chartjs-2": "^5.2.0",
