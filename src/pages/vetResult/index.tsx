@@ -211,6 +211,7 @@ export default function VetResult() {
       if (response.status === 200) {
         console.log('전송 성공');
       }
+      console.log(response)
     } catch (error) {
       console.error('코멘트 등록 중 에러가 발생했습니다.', error);
     }
