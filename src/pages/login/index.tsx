@@ -1,4 +1,4 @@
-import { useState, ChangeEvent } from 'react';
+import { useState, ChangeEvent, useEffect } from 'react';
 import Input from '../../components/common/Input';
 import { Link, useNavigate } from 'react-router-dom';
 import FullButton from '../../components/common/FullButton';
@@ -13,7 +13,13 @@ const Login = () => {
   const [isPasswordValid, setIsPasswordValid] = useState(false);
 
   const navigate = useNavigate();
-  const { setToken } = useAuthStore();
+  const { setToken,token } = useAuthStore();
+
+  useEffect(() => {
+    if (token) {
+      navigate('/');
+    }
+  }, []);
 
   const handleIdChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
