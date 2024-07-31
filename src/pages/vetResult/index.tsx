@@ -183,21 +183,23 @@ export default function VetResult() {
     setComment(e.target.value);
   };
 
-  const postComment = async () => {
-    try {
-      const response = await baseInstance.post(`tests/comment`, {
-        test_id: testId,
-        comment: comment,
-      });
+  // const postComment = async () => {
+  //   try {
+  //     const response = await baseInstance.post(`tests/comment`, {
+  //       test_id: testId,
+  //       comment: comment,
+  //     });
 
-      if (response.status === 200) {
-        setSavedComment(comment);
-        postPush();
-      }
-    } catch (error) {
-      console.error('코멘트 등록 중 에러가 발생했습니다.', error);
-    }
-  };
+  //     if (response.status === 200) {
+  //       setSavedComment(comment);
+  //       postPush();
+  //     }
+  //   } catch (error) {
+  //     console.error('코멘트 등록 중 에러가 발생했습니다.', error);
+  //   }
+  // };
+
+
 
   const postPush = async () => {
     try {
@@ -298,7 +300,7 @@ export default function VetResult() {
               <div className='flex justify-end mt-1'>
                 <button
                   className='bg-blue-500 text-white px-4 py-2 rounded-md'
-                  onClick={postComment}
+                  onClick={postPush}
                 >
                   코멘트 등록하기
                 </button>
