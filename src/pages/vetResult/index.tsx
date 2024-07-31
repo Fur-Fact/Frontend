@@ -142,7 +142,7 @@ export default function VetResult() {
     try {
       if (contactNumber && petName) {
         const response = await baseInstance.get(
-          `vet/search?contactNumber=${contactNumber}&petName=${petName}`
+          `tests/vet/search?contactNumber=${contactNumber}&petName=${petName}`
         );
 
         if (response.status === 200) {
