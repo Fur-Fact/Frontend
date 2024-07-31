@@ -303,7 +303,7 @@ export default function VetResult() {
                   className='bg-blue-500 text-white px-4 py-2 rounded-md'
                   onClick={postPush}
                 >
-                  코멘트 등록하기
+                  코멘트 등록하기 알림
                 </button>
               </div>
             )}
