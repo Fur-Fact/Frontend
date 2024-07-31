@@ -1,10 +1,13 @@
 import NotificationItem from '../../components/alarm/NotificationItem';
 import { useEffect, useState } from 'react';
+import useAuthStore from '../../store/useAuthStore';
 
 const data = [{ petName: '나비', iteration: 1 }];
 
 function AlarmPage() {
   const [isLoading, setIsLoading] = useState(false);
+
+  const { clearToken } = useAuthStore();
 
   const handleClick = () => {
     setIsLoading(true); 
@@ -54,6 +57,7 @@ function AlarmPage() {
             ))
           )}
         </div>
+        <button onClick={clearToken}>로그아웃</button>
       </section>
     </>
   );
