@@ -67,6 +67,7 @@ const SignUp = () => {
         alert('중복된 이메일 또는 필드 누락');
       } else {
         alert('error');
+        alert(error.message);
         console.log(error);
       }
     }
