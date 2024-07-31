@@ -202,6 +202,8 @@ export default function VetResult() {
 
 
   const postPush = async () => {
+    console.log(testId)
+    console.log(contactNumber)
     try {
       const response = await baseInstance.post(`tests/push`, {
         test_id: testId,
