@@ -80,7 +80,7 @@ const Login = () => {
       <div className='flex flex-col h-full font-bold justify-between items-start m-8 mt-16'>
         <div className='flex flex-col items-start'>
           <h1 className='text-5xl leading-[4rem] font-sans'>안녕하세요,</h1>
-          <h1 className='text-5xl'>퍼팩트입니다!</h1>
+          <h1 className='text-5xl'>퍼팩트입니다!_ver.0.1</h1>
         </div>
         <div>
           <Input placeholder='아이디' value={id} onChange={handleIdChange} />
