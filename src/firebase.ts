@@ -31,9 +31,10 @@ export const getFCMToken = async (): Promise<void> => {
                 });
                 console.log(response);
                 alert('토큰 전달');
+                alert(currentToken)
             } catch (error) {
                 console.error(error);
-                alert('토큰 전달');
+                alert('토큰 전달 실패');
             }
         } else {
             alert('토큰을 받아오지 못했습니다!');
