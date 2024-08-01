@@ -36,7 +36,8 @@ export const getFCMToken = async (token: string): Promise<void> => {
                         'Authorization': `Bearer ${token}`, // Include token if needed for authentication
                     }
                 });
-                alert('로그인 되었습니다!')       
+                alert('로그인 되었습니다!')
+                console.log(response);    
                 navigate('/');
             } catch (error) {
                 console.error(error);
