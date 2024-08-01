@@ -21,17 +21,21 @@ const messagingInstance: Messaging = getMessaging();
 
 
 
-export const getFCMToken = async (): Promise<void> => {
+export const getFCMToken = async (token: string): Promise<void> => {
     try {
         const currentToken = await getToken(messagingInstance, { vapidKey: import.meta.env.VITE_PUBLIC_VAPID_KEY as string });
         if (currentToken) {
             try {
                 const response = await baseInstance.post('/users/updateToken', {
                     fcmToken: currentToken
+                }, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`, // Include token if needed for authentication
+                    }
                 });
                 console.log(response);
                 alert('토큰 전달');
-                alert(currentToken)
+                alert(currentToken);
             } catch (error) {
                 console.error(error);
                 alert('토큰 전달 실패');
@@ -40,6 +44,7 @@ export const getFCMToken = async (): Promise<void> => {
             alert('토큰을 받아오지 못했습니다!');
         }
     } catch (error) {
-        alert(error)
+        console.error(error);
+        alert('토큰 받아오기 실패');
     }
 };
