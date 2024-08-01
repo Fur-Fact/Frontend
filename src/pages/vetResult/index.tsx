@@ -133,6 +133,7 @@ export default function VetResult() {
         setWeight(response.data.data.weight);
         setContactNumber(response.data.data.contactNumber);
       }
+      console.log(response.data.data)
     } catch (error) {
       console.error('데이터 요청 중 에러가 발생했습니다.', error);
     }
@@ -216,6 +217,7 @@ export default function VetResult() {
       console.log(response)
     } catch (error) {
       console.error(error);
+      
     }
   };
   return (
