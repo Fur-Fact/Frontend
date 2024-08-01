@@ -1,6 +1,5 @@
 import NotificationItem from '../../components/alarm/NotificationItem';
 import { useEffect, useState } from 'react';
-import useAuthStore from '../../store/useAuthStore';
 
 const data = [{ petName: '나비', iteration: 1 }];
 
