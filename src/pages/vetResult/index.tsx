@@ -184,21 +184,20 @@ export default function VetResult() {
     setComment(e.target.value);
   };
 
-  // const postComment = async () => {
-  //   try {
-  //     const response = await baseInstance.post(`tests/comment`, {
-  //       test_id: testId,
-  //       comment: comment,
-  //     });
-
-  //     if (response.status === 200) {
-  //       setSavedComment(comment);
-  //       postPush();
-  //     }
-  //   } catch (error) {
-  //     console.error('코멘트 등록 중 에러가 발생했습니다.', error);
-  //   }
-  // };
+  const postComment = async () => {
+    try {
+      const response = await baseInstance.post(`tests/comment`, {
+        test_id: testId,
+        comment: comment,
+      });
+      if (response.status === 200) {
+        setSavedComment(comment);
+        postPush();
+      }
+    } catch (error) {
+      console.error('코멘트 등록 중 에러가 발생했습니다.', error);
+    }
+  };
 
 
 
@@ -217,9 +216,9 @@ export default function VetResult() {
       console.log(response)
     } catch (error) {
       console.error(error);
-      
     }
   };
+  
   return (
     <div className='flex flex-col justify-between h-4/5 items-center mx-14'>
       <div className='w-full h-full bg-white p-4 shadow-md rounded-lg mt-[3%]'>
@@ -305,9 +304,9 @@ export default function VetResult() {
               <div className='flex justify-end mt-1'>
                 <button
                   className='bg-blue-500 text-white px-4 py-2 rounded-md'
-                  onClick={postPush}
+                  onClick={postComment}
                 >
-                  코멘트 등록하기 알림
+                  코멘트 등록하기
                 </button>
               </div>
             )}

@@ -7,7 +7,7 @@ const data = [{ petName: '나비', iteration: 1 }];
 function AlarmPage() {
   const [isLoading, setIsLoading] = useState(false);
 
-  const { clearToken } = useAuthStore();
+  // const { clearToken } = useAuthStore();
 
   const handleClick = () => {
     setIsLoading(true); 
@@ -57,7 +57,7 @@ function AlarmPage() {
             ))
           )}
         </div>
-        <button onClick={clearToken}>로그아웃</button>
+        {/* <button onClick={clearToken}>로그아웃</button> */}
       </section>
     </>
   );

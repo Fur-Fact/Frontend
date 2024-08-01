@@ -20,7 +20,9 @@ self.addEventListener("push", function (e) {
     body: resultData.body,
   });
 
-  e.waitUntil(self.registration.showNotification("수의사의 코멘트가 등록되었습니다!", "수의사의 코멘트가 등록되었습니다!"));
+  e.waitUntil(
+    self.registration.showNotification(notificationTitle, notificationOptions)
+  );
 });
 
 self.addEventListener("notificationclick", function (e) {

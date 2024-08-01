@@ -55,7 +55,6 @@ const SignUp = () => {
         password: password,
         phone: phone,
       });
-
       if (response.status === 200) {
         alert('회원가입 성공');
         navigate('/login');
