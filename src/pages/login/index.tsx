@@ -63,7 +63,7 @@ const Login = () => {
       const permission = await Notification.requestPermission();
       if (permission !== "granted") {
         console.log('Notification permission denied');
-        alert("토큰 거부")
+        alert("알림 허용을 해주셔야 알림을 받을 수 있습니다.");
       } else {
         console.log('Notification permission granted');
         getFCMToken(token);
@@ -80,7 +80,7 @@ const Login = () => {
       <div className='flex flex-col h-full font-bold justify-between items-start m-8 mt-16'>
         <div className='flex flex-col items-start'>
           <h1 className='text-5xl leading-[4rem] font-sans'>안녕하세요,</h1>
-          <h1 className='text-5xl'>퍼팩트입니다!_ver.0.2</h1>
+          <h1 className='text-5xl'>퍼팩트입니다!</h1>
         </div>
         <div>
           <Input placeholder='아이디' value={id} onChange={handleIdChange} />
