@@ -96,7 +96,7 @@ const PetCard = ({
       );
       if (response.status === 200) {
         console.log(response)
-        setInspectionDatas(response.data.data);
+        setInspectionDatas(response.data.tests);
       }
     } catch (error) {
       console.error('데이터 요청 중 에러가 발생했습니다.', error);
