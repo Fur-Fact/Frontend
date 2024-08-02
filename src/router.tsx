@@ -9,6 +9,7 @@ import Alarm from "./pages/alarm";
 import ResultMobilePage from "./pages/result/mobile";
 import Vet from './pages/vetList';
 import VetResult from './pages/vetResult';
+import Logout from "./pages/logout";
 
 
 export const router = createBrowserRouter([
@@ -36,6 +37,10 @@ export const router = createBrowserRouter([
         path: "result/:id",
         element: <ResultMobilePage />,
       },
+      {
+        path: "logout",
+        element: <Logout></Logout>
+      }
     ],
   },
   {
