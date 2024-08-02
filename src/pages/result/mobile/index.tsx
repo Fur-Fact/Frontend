@@ -216,15 +216,6 @@ function ResultMobilePage() {
               칼슘, 마그네슘, 아연, 셀레늄, 크롬, 바나듐
             </span>
           </div>
-          <div className='flex w-full px-3 gap-1 '>
-            <span className='text-black text-sm whitespace-nowrap'>
-              수의사 코멘트 :
-            </span>
-            <span className='text-black text-sm'>
-              전체적으로 건강하고 잘 크고 있습니다 다만, 사료에서 칼슘만 조금 더
-              보충해주세요
-            </span>
-          </div>
         </div>
         {comment ? (
           <div className='flex w-full items-center justify-start gap-1 h-12 border border-solid border-primary rounded-xl mt-5 px-3'>
