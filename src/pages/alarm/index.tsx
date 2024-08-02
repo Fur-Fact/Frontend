@@ -1,7 +1,7 @@
 import NotificationItem from '../../components/alarm/NotificationItem';
 import { useEffect, useState } from 'react';
 
-const data = [{ petName: '여름', iteration: 1 }];
+const data = [{ petName: '뭉치', iteration: 1 }];
 
 function AlarmPage() {
   const [isLoading, setIsLoading] = useState(false);
