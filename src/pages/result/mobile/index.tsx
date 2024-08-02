@@ -171,6 +171,11 @@ function ResultMobilePage() {
     fetchTestResult();
   }, []);
 
+  const alret = () =>{
+    alert("수의사 코멘트 요청이 완료되었습니다.")
+  }
+
+
   /* prettier-ignore */
   const slicedResultDate = `${resultDate.slice(0, 4)} ${resultDate.slice(5, 7)} ${resultDate.slice(8, 10)}`;
 
@@ -235,7 +240,7 @@ function ResultMobilePage() {
             <div className='text-black text-sm'></div>
           ) : (
             <div className='flex w-full justify-end mt-2'>
-              <button className='flex justify-center items-center w-44 h-9 bg-primary rounded-3xl text-white font-bold text-sm whitespace-nowrap'>
+              <button onClick={alret} className='flex justify-center items-center w-44 h-9 bg-primary rounded-3xl text-white font-bold text-sm whitespace-nowrap'>
                 수의사 코멘트 요청하기
               </button>
             </div>

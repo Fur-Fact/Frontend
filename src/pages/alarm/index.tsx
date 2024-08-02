@@ -1,7 +1,7 @@
 import NotificationItem from '../../components/alarm/NotificationItem';
 import { useEffect, useState } from 'react';
 
-const data = [{ petName: '뭉치', iteration: 1 }];
+const data = [{ petName: '사고', iteration: 1 }];
 
 function AlarmPage() {
   const [isLoading, setIsLoading] = useState(false);
@@ -26,7 +26,6 @@ function AlarmPage() {
           <h1 className='text-black font-bold text-3xl text-start pt-7 pl-7'>
             알림
           </h1>
-
           <div className='p-7 cursor-pointer' onClick={handleClick}>
             <svg
               xmlns='http://www.w3.org/2000/svg'
