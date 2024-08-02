@@ -95,6 +95,7 @@ const PetCard = ({
         }
       );
       if (response.status === 200) {
+        console.log(response)
         setInspectionDatas(response.data.data);
       }
     } catch (error) {
