@@ -1,9 +1,13 @@
-import Navigation from '../../../components/common/Navigation/Navigation';
-import ResultItem from '../../../components/result/ResultItem';
-import { useEffect, useState } from 'react';
-import useAuthStore from '../../../store/useAuthStore';
-import { useParams } from 'react-router-dom';
-import { baseInstance } from '../../../api/config';
+import Navigation from "../../../components/common/Navigation/Navigation";
+import ResultItem from "../../../components/result/ResultItem";
+import { useEffect, useState } from "react";
+import useAuthStore from "../../../store/useAuthStore";
+import { useParams } from "react-router-dom";
+import { baseInstance } from "../../../api/config";
+import feedSample1 from "../../../assets/feedSample1.jpg";
+import feedSample2 from "../../../assets/feedSample2.jpg";
+import feedSample3 from "../../../assets/feedSample3.jpg";
+
 interface FurData {
   id: number;
   testId: number;
@@ -138,9 +142,10 @@ function ResultMobilePage() {
   const { token } = useAuthStore();
   const { id } = useParams<{ id: string }>();
 
-  const [resultDate, setResultDate] = useState<string>('');
+  const [resultDate, setResultDate] = useState<string>("");
   const [furData, setFurData] = useState<FurData | null>(null);
   const [comment, setComment] = useState<string | null>(null);
+  const [petName, setPetName] = useState<string | null>(null);
 
   const fetchTestResult = async () => {
     try {
@@ -156,6 +161,7 @@ function ResultMobilePage() {
       setResultDate(response.data.data.resultDate);
       setFurData(response.data.data.FurData[0]);
       setComment(response.data.data.comment);
+      setPetName(response.data.data.petName);
     } catch (e) {
       console.error(e);
     }
@@ -194,22 +200,22 @@ function ResultMobilePage() {
             ))}
           {/* 구분 색상 배경 */}
           <div className='absolute top-0 left-0 w-[123px] h-full bg-[#efefef]'>
-            <h2 className='font-semibold text-black text-lg z-10 py-3 bg-[#e6dfdf]'>
+            <h2 className='font-bold text-black text-lg z-10 py-3 bg-[#e6dfdf] text-center'>
               결핍
             </h2>
           </div>
           <div className='absolute transform -translate-x-1/2 top-0 left-1/2 w-[105px] h-full bg-[#e5eaf6]'>
-            <h2 className='font-semibold text-black text-lg z-10 py-3 bg-[#d4def5]'>
+            <h2 className='font-bold text-black text-lg z-10 py-3 bg-[#d4def5] text-center'>
               기준 범위
             </h2>
           </div>
           <div className='absolute top-0 right-0 w-[123px] h-full bg-[#e8ece2]'>
-            <h2 className='font-semibold text-black text-lg z-10 py-3 bg-[#e2e9d2]'>
+            <h2 className='font-bold text-black text-lg z-10 py-3 bg-[#e2e9d2] text-center'>
               과다
             </h2>
           </div>
         </div>
-        <div className='flex flex-col w-full items-center justify-start  h-20 border border-solid border-primary rounded-xl '>
+        <div className='flex flex-col w-full items-center justify-start  h-20 border border-solid border-primary rounded-xl mt-5'>
           <div className='flex w-full mt-2 px-3 gap-1'>
             <span className='text-black text-sm'>위험 요소 :</span>
             <span className='text-black text-sm'>
@@ -243,6 +249,45 @@ function ResultMobilePage() {
               </button>
             </div>
           )} */}
+        <div className='flex flex-col w-full justify-start items-start my-5 gap-2 bg-[#f2f2f2] px-3 py-3 rounded-md'>
+          <span className='text-black text-lg font-bold'>개별 맞춤형 사료</span>
+          <span className='text-black text-sm'>
+            <span className='font-bold'>{petName}</span>에게 권해드리는 사료는
+            다음과 같습니다.
+          </span>
+          <div className='flex justify-start items-center w-full h-20 bg-white rounded-lg px-1 py-1 shadow-md border border-solid border-gray-200'>
+            <div className='flex justify-center items-center w-1/3 h-full'>
+              <img src={feedSample1} alt='사료 이미지' className='h-full' />
+            </div>
+            <div className='flex flex-col h-full items-start justify-center'>
+              <span className='text-black text-lg font-bold'>로얄케닌</span>
+              <span className='text-[#B3B1B0] text-xs'>2-3세</span>
+              <span className='font-semibold mt-1 text-primary'>15,000원</span>
+            </div>
+          </div>
+          <div className='flex justify-start items-center w-full h-20 bg-white rounded-lg px-1 py-1 shadow-md border border-solid border-gray-200'>
+            <div className='flex justify-center items-center w-1/3 h-full'>
+              <img src={feedSample2} alt='사료 이미지' className='h-full' />
+            </div>
+            <div className='flex flex-col h-full items-start justify-center'>
+              <span className='text-black text-lg font-bold'>
+                힐스 사이언스 다이어트
+              </span>
+              <span className='text-[#B3B1B0] text-xs'>1-3세</span>
+              <span className='font-semibold mt-1 text-primary'>18,500원</span>
+            </div>
+          </div>
+          <div className='flex justify-start items-center w-full h-20 bg-white rounded-lg px-1 py-1 shadow-md border border-solid border-gray-200'>
+            <div className='flex justify-center items-center w-1/3 h-full'>
+              <img src={feedSample3} alt='사료 이미지' className='h-full' />
+            </div>
+            <div className='flex flex-col h-full items-start justify-center'>
+              <span className='text-black text-lg font-bold'>오리젠</span>
+              <span className='text-[#B3B1B0] text-xs'>1-2세</span>
+              <span className='font-semibold mt-1 text-primary'>21,000원</span>
+            </div>
+          </div>
+        </div>
       </section>
       <Navigation />
     </>
