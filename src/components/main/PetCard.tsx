@@ -87,7 +87,7 @@ const PetCard = ({
   const getInspectionData = async () => {
     try {
       const response = await baseInstance.get(
-        `tests/vet/search?&petName=${name}`,
+        `tests/user/search?&petName=${name}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
