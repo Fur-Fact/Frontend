@@ -2,6 +2,7 @@
 import { initializeApp, FirebaseApp } from 'firebase/app';
 import { getMessaging, getToken, Messaging } from 'firebase/messaging';
 import { baseInstance } from './api/config';
+import { useNavigate } from 'react-router-dom';
 
 const firebaseConfig = {
     apiKey: import.meta.env.VITE_FIREBASE_API_KEY as string,
@@ -21,24 +22,32 @@ const messagingInstance: Messaging = getMessaging();
 
 
 
-export const getFCMToken = async (): Promise<void> => {
+export const getFCMToken = async (token: string): Promise<void> => {
+    const navigate = useNavigate();
+
     try {
         const currentToken = await getToken(messagingInstance, { vapidKey: import.meta.env.VITE_PUBLIC_VAPID_KEY as string });
         if (currentToken) {
             try {
                 const response = await baseInstance.post('/users/updateToken', {
                     fcmToken: currentToken
+                }, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`, // Include token if needed for authentication
+                    }
                 });
-                console.log(response);
-                alert('토큰 전달');
+                alert('로그인 되었습니다!')
+                console.log(response);    
+                navigate('/');
             } catch (error) {
                 console.error(error);
-                alert('토큰 전달');
+                alert('토큰 전달 실패');
             }
         } else {
             alert('토큰을 받아오지 못했습니다!');
         }
     } catch (error) {
-        alert(error)
+        console.error(error);
+        alert('토큰 받아오기 실패');
     }
 };

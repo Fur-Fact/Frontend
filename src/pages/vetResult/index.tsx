@@ -133,6 +133,7 @@ export default function VetResult() {
         setWeight(response.data.data.weight);
         setContactNumber(response.data.data.contactNumber);
       }
+      console.log(response.data.data)
     } catch (error) {
       console.error('데이터 요청 중 에러가 발생했습니다.', error);
     }
@@ -142,7 +143,7 @@ export default function VetResult() {
     try {
       if (contactNumber && petName) {
         const response = await baseInstance.get(
-          `vet/search?contactNumber=${contactNumber}&petName=${petName}`
+          `tests/vet/search?contactNumber=${contactNumber}&petName=${petName}`
         );
 
         if (response.status === 200) {
@@ -189,7 +190,6 @@ export default function VetResult() {
         test_id: testId,
         comment: comment,
       });
-
       if (response.status === 200) {
         setSavedComment(comment);
         postPush();
@@ -199,7 +199,11 @@ export default function VetResult() {
     }
   };
 
+
+
   const postPush = async () => {
+    console.log(testId)
+    console.log(contactNumber)
     try {
       const response = await baseInstance.post(`tests/push`, {
         test_id: testId,
@@ -209,10 +213,12 @@ export default function VetResult() {
       if (response.status === 200) {
         console.log('전송 성공');
       }
+      console.log(response)
     } catch (error) {
-      console.error('코멘트 등록 중 에러가 발생했습니다.', error);
+      console.error(error);
     }
   };
+  
   return (
     <div className='flex flex-col justify-between h-4/5 items-center mx-14'>
       <div className='w-full h-full bg-white p-4 shadow-md rounded-lg mt-[3%]'>

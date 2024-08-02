@@ -46,7 +46,7 @@ const Login = () => {
         alert('로그인 되었습니다!');
         setToken(response.data.access_token);
         registerServiceWorker();
-        requestNotificationPermission();
+        requestNotificationPermission(response.data.access_token);
       }
     } catch (error: any) {
       if (error.response && error.response.status === 400) {
@@ -58,15 +58,15 @@ const Login = () => {
     }
   };
 
-  const requestNotificationPermission = async () => {
+  const requestNotificationPermission = async (token:string) => {
     try {
       const permission = await Notification.requestPermission();
       if (permission !== "granted") {
         console.log('Notification permission denied');
-        alert("토큰 거부")
+        alert("알림 허용을 해주셔야 알림을 받을 수 있습니다.");
       } else {
         console.log('Notification permission granted');
-        getFCMToken();
+        getFCMToken(token);
       }
     } catch (error) {
       console.error('Error requesting notification permission:', error);
@@ -99,6 +99,18 @@ const Login = () => {
               >
                 {' '}
                 회원가입
+              </Link>
+            </div>
+          </div>
+          <div className='w-full flex flex-row justify-center'>
+            <div className='flex flex-row text-xs justify-center'>
+              수의사 이신가요?{' '}
+              <Link
+                className='text-primary font-bold hover:text-blue-500'
+                to='/vet'
+              >
+                {' '}
+                수의사 페이지
               </Link>
             </div>
           </div>
