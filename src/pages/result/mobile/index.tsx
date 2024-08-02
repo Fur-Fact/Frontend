@@ -231,7 +231,7 @@ function ResultMobilePage() {
             <span className='text-black text-sm'>{comment}</span>
           </div>
         ) : null}
-        {/* {comment ? (
+        {comment ? (
             <div className='text-black text-sm'></div>
           ) : (
             <div className='flex w-full justify-end mt-2'>
@@ -239,7 +239,7 @@ function ResultMobilePage() {
                 수의사 코멘트 요청하기
               </button>
             </div>
-          )} */}
+          )}
         <div className='flex flex-col w-full justify-start items-start my-5 gap-2 bg-[#f2f2f2] px-3 py-3 rounded-md'>
           <span className='text-black text-lg font-bold'>개별 맞춤형 사료</span>
           <span className='text-black text-sm'>
