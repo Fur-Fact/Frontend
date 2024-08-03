@@ -104,7 +104,7 @@ const Login = () => {
             </div>
           </div>
           <div className='w-full flex flex-row justify-center'>
-            <div className='flex flex-row text-xs justify-center'>
+            {/* <div className='flex flex-row text-xs justify-center'>
               수의사 이신가요?{' '}
               <Link
                 className='text-primary font-bold hover:text-blue-500'
@@ -113,7 +113,7 @@ const Login = () => {
                 {' '}
                 수의사 페이지
               </Link>
-            </div>
+            </div> */}
           </div>
         </div>
         <FullButton onClick={handleLogin} disabled={!isFormValid}>
