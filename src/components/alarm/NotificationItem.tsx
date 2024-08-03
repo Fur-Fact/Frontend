@@ -18,7 +18,7 @@ function NotificationItem({ petName, iteration }: NotificationItemProps) {
       <div className='flex justify-center items-center w-7'>
         <img src={Alarm_Focus} alt='' className='w-6' />
       </div>
-      <div className='flex flex-col w-full max-w-[305px] items-start justify-center'>
+      <div className=' hidden  flex-col w-full max-w-[305px] items-start justify-center'>
         <span className='w-full text-start text-black text-[13px] font-bold overflow-hidden whitespace-nowrap text-ellipsis'>
           {petName}의 {iteration}회차 검사에 따른 수의사 코멘트가 도착했어요!
         </span>
