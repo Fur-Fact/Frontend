@@ -47,6 +47,7 @@ const Login = () => {
         setToken(response.data.access_token);
         registerServiceWorker();
         requestNotificationPermission(response.data.access_token);
+        navigate('/');
       }
     } catch (error: any) {
       if (error.response && error.response.status === 400) {
